@@ -748,7 +748,7 @@ function showToast(message, type = 'info') {
   const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
   toast.innerHTML = `<span>${icon}</span><span>${escHtml(message)}</span>`;
   container.appendChild(toast);
-  setTimeout(() => toast.remove(), 4000);
+  setTimeout(() => toast.remove(), 2500);
 }
 
 function createToastContainer() {

@@ -189,19 +189,6 @@
           ]
         },
         {
-          "id": "dsp_dd_002",
-          "text": "AI-based content classification is configured and classification labels are applied",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/data-security/data-classification.html",
-          "recommendation": "Enable AI-powered content classification to automatically classify files into sensitivity categories (Public, Internal, Confidential, Restricted). Configure classification labels matching your data governance policy. AI classification significantly reduces false positives compared to regex-only classification.",
-          "statusOptions": [
-            "configured",
-            "partial",
-            "not_configured",
-            "na"
-          ]
-        },
-        {
           "id": "dsp_dd_003",
           "text": "ROT (Redundant, Obsolete, Trivial) data analysis is run to reduce data risk footprint",
           "type": "PU",
