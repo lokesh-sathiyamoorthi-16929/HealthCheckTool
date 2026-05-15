@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assessment — Log360 HC Tool</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">🛡️ Log360 HC Tool</div>
+      <div class="brand-sub">Health Check &amp; Scorecard</div>
+    </div>
+
+    <span class="sidebar-section-label">Navigation</span>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><span class="nav-icon">🏠</span> Home</a></li>
+      <li><a href="dashboard.html"><span class="nav-icon">📊</span> Customers Dashboard</a></li>
+    </ul>
+
+    <span class="sidebar-section-label">Components</span>
+    <ul class="sidebar-nav" id="sidebar-components">
+      <li><button class="nav-btn" onclick="switchComponent('adaudit')"><span class="nav-icon">🛡️</span> ADAudit Plus</button></li>
+      <li><button class="nav-btn" onclick="switchComponent('dataSecurity')"><span class="nav-icon">🔒</span> DataSecurity Plus</button></li>
+      <li><button class="nav-btn" onclick="switchComponent('eventlog')"><span class="nav-icon">📋</span> EventLog Analyzer</button></li>
+      <li><button class="nav-btn" onclick="switchComponent('log360')"><span class="nav-icon">🖥️</span> Log360</button></li>
+      <li><button class="nav-btn" onclick="switchComponent('log360cloud')"><span class="nav-icon">☁️</span> Log360 Cloud</button></li>
+    </ul>
+
+    <span class="sidebar-section-label">Scores</span>
+    <ul class="sidebar-nav">
+      <li style="padding:6px 14px;">
+        <table style="width:100%;font-size:0.75rem;color:#c8d8f0;">
+          <tr><td>ADAudit</td><td id="mini-hc-adaudit" style="text-align:right;color:#7dd3fc;">—</td><td id="mini-pu-adaudit" style="text-align:right;color:#6ee7b7;">—</td></tr>
+          <tr><td>DSP</td><td id="mini-hc-dataSecurity" style="text-align:right;color:#7dd3fc;">—</td><td id="mini-pu-dataSecurity" style="text-align:right;color:#6ee7b7;">—</td></tr>
+          <tr><td>ELA</td><td id="mini-hc-eventlog" style="text-align:right;color:#7dd3fc;">—</td><td id="mini-pu-eventlog" style="text-align:right;color:#6ee7b7;">—</td></tr>
+          <tr><td>Log360</td><td id="mini-hc-log360" style="text-align:right;color:#7dd3fc;">—</td><td id="mini-pu-log360" style="text-align:right;color:#6ee7b7;">—</td></tr>
+          <tr><td>Cloud</td><td id="mini-hc-log360cloud" style="text-align:right;color:#7dd3fc;">—</td><td id="mini-pu-log360cloud" style="text-align:right;color:#6ee7b7;">—</td></tr>
+        </table>
+        <div style="font-size:0.6rem;color:rgba(200,216,240,0.4);margin-top:4px;text-align:right;">HC / PU</div>
+      </li>
+    </ul>
+
+    <div class="sidebar-bottom">
+      <span id="save-status" class="save-indicator">Auto-save on</span>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="main-content">
+    <header class="top-bar">
+      <button class="hamburger" id="hamburger">☰</button>
+      <div>
+        <div class="top-bar-title">
+          <span id="customer-name">Loading…</span>
+          <span id="customer-domain" class="text-muted text-small"></span>
+        </div>
+        <div class="text-small text-muted">
+          Assessor: <span id="assessor-name">—</span> &bull;
+          Date: <span id="assessment-date">—</span>
+        </div>
+      </div>
+      <div class="top-bar-actions">
+        <button class="btn btn-secondary btn-sm" onclick="handleSaveNow()">💾 Save</button>
+        <button class="btn btn-secondary btn-sm" onclick="openExportModal()">📤 Export</button>
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">◀ Back</a>
+      </div>
+    </header>
+
+    <main class="page-body">
+
+      <!-- Overall Scores -->
+      <div class="score-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:20px;">
+        <div class="score-card score-hc">
+          <div class="score-label">Overall HC Score</div>
+          <div class="score-value" id="overall-hc">—</div>
+          <div class="score-progress"><div class="score-progress-fill" id="overall-hc-bar" style="width:0%"></div></div>
+        </div>
+        <div class="score-card score-pu">
+          <div class="score-label">Overall PU Score</div>
+          <div class="score-value score-pu" id="overall-pu">—</div>
+          <div class="score-progress"><div class="score-progress-fill score-pu" id="overall-pu-bar" style="width:0%"></div></div>
+        </div>
+        <div class="score-card score-overall" style="min-height:120px;">
+          <div class="score-label">Suite Overview</div>
+          <div style="height:90px;position:relative;">
+            <canvas id="overall-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Component Tabs -->
+      <div class="component-tabs" id="component-tabs"></div>
+
+      <!-- Component Panel -->
+      <div id="component-panel">
+        <div class="loading-spinner" style="padding:40px 0;">
+          <div class="spinner"></div> Loading criteria…
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Export Modal -->
+<div class="modal-overlay" id="export-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">📤 Export Report</h2>
+      <button class="modal-close" onclick="document.getElementById('export-modal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-muted text-small mb-2">Choose your export format:</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <button class="btn btn-outline" onclick="handleExportPDF();document.getElementById('export-modal').classList.remove('show')">
+          📄 PDF — Formatted branded report (via browser print)
+        </button>
+        <button class="btn btn-outline" onclick="handleExportHTML();document.getElementById('export-modal').classList.remove('show')">
+          🌐 HTML — Standalone file, shareable via email
+        </button>
+        <button class="btn btn-outline" onclick="handleExportCSV();document.getElementById('export-modal').classList.remove('show')">
+          📊 CSV/Excel — Criteria-level data export
+        </button>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:#f8f9fc;border-radius:6px;">
+        <p class="text-small text-muted">💡 <strong>Tip:</strong> For PDF, use the HTML export and open it in your browser, then use File &gt; Print &gt; Save as PDF for best results.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('export-modal').classList.remove('show')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+<!-- App Scripts -->
+<script src="js/api.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/recommendations.js"></script>
+<script src="js/export.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+  function openExportModal() {
+    document.getElementById('export-modal').classList.add('show');
+  }
+  document.getElementById('export-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+
+  // Update sidebar nav active state based on current component
+  function updateSidebarNav(comp) {
+    document.querySelectorAll('#sidebar-components .nav-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    const compMap = {
+      adaudit: 0, dataSecurity: 1, eventlog: 2, log360: 3, log360cloud: 4
+    };
+    const idx = compMap[comp];
+    if (idx !== undefined) {
+      const btns = document.querySelectorAll('#sidebar-components .nav-btn');
+      if (btns[idx]) btns[idx].classList.add('active');
+    }
+  }
+
+  // Patch switchComponent to also update sidebar
+  const _origSwitch = window.switchComponent;
+  window.switchComponent = function(comp) {
+    if (_origSwitch) _origSwitch(comp);
+    updateSidebarNav(comp);
+  };
+</script>
+
+<style>
+  .save-indicator { font-size: 0.72rem; color: rgba(200,216,240,0.6); }
+  .save-indicator.saved { color: #6ee7b7; }
+  .save-indicator.error { color: #fca5a5; }
+  .badge-HC { background:#dbeafe;color:#1e40af; }
+  .badge-PU { background:#d1fae5;color:#065f46; }
+  .badge-PU-HC { background:#ede9fe;color:#5b21b6; }
+  .badge-HC-PU { background:#ede9fe;color:#5b21b6; }
+  .badge-PU\/HC { background:#ede9fe;color:#5b21b6; }
+  .badge-HC\/PU { background:#ede9fe;color:#5b21b6; }
+</style>
+</body>
+</html>
