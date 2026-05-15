@@ -9,225 +9,371 @@
   "sections": [
     {
       "id": "services",
-      "name": "🖥️ Services & Infrastructure",
+      "name": "\ud83d\udda5\ufe0f Services & Infrastructure",
       "criteria": [
         {
           "id": "dsp_svc_001",
           "text": "DataSecurity Plus Windows service is running and configured with a dedicated service account",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/help/setting-up-datasecurity-plus/installation.html",
-          "recommendation": "Configure DataSecurity Plus to run under a dedicated service account with least-privilege access. The service account must have read access to monitored shares and audit access to file servers. Avoid using Domain Admin for the service account."
+          "recommendation": "Configure DataSecurity Plus to run under a dedicated service account with least-privilege access. The service account must have read access to monitored shares and audit access to file servers. Avoid using Domain Admin for the service account.",
+          "statusOptions": [
+            "correct",
+            "partial",
+            "incorrect"
+          ]
         },
         {
           "id": "dsp_svc_002",
           "text": "DataSecurity Plus is on the latest available build",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/release-notes.html",
-          "recommendation": "Update to the latest DataSecurity Plus build. Recent builds include AI-based content classification, ransomware detection improvements, and expanded CASB (Cloud App Security Broker) capabilities. Navigate to Admin > Product Updates to check current version."
+          "recommendation": "Update to the latest DataSecurity Plus build. Recent builds include AI-based content classification, ransomware detection improvements, and expanded CASB (Cloud App Security Broker) capabilities. Navigate to Admin > Product Updates to check current version.",
+          "statusOptions": [
+            "latest",
+            "one_behind",
+            "outdated",
+            "na"
+          ]
         },
         {
           "id": "dsp_svc_003",
           "text": "DataSecurity Plus server meets hardware requirements for monitored data volume",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/help/setting-up-datasecurity-plus/system-requirements.html",
-          "recommendation": "Validate server specs against the number of monitored file servers and data volume. For environments monitoring >100TB: 16GB RAM minimum, 8 CPU cores, 500GB SSD for product storage. Under-provisioning leads to missed file events and audit trail gaps."
+          "recommendation": "Validate server specs against the number of monitored file servers and data volume. For environments monitoring >100TB: 16GB RAM minimum, 8 CPU cores, 500GB SSD for product storage. Under-provisioning leads to missed file events and audit trail gaps.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_svc_004",
           "text": "External database (MSSQL/PostgreSQL) is configured for production deployments",
-          "type": "HC",
+          "type": "INFO",
           "helpLink": "https://www.manageengine.com/data-security/help/setting-up-datasecurity-plus/database-configuration.html",
-          "recommendation": "Migrate to MSSQL or PostgreSQL for production environments monitoring critical file data. External databases support HA, regular backups, and better performance under high I/O loads. File access auditing generates high event volumes that strain embedded databases."
+          "recommendation": "Migrate to MSSQL or PostgreSQL for production environments monitoring critical file data. External databases support HA, regular backups, and better performance under high I/O loads. File access auditing generates high event volumes that strain embedded databases.",
+          "statusOptions": [
+            "info"
+          ]
         }
       ]
     },
     {
       "id": "licensing",
-      "name": "📋 Licensing",
+      "name": "\ud83d\udccb Licensing",
       "criteria": [
         {
           "id": "dsp_lic_001",
           "text": "DataSecurity Plus license covers all monitored file servers",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/help/",
-          "recommendation": "Verify the license covers all file servers in scope. Unlicensed file servers are silently excluded from monitoring. Navigate to Admin > License to verify. Contact ManageEngine for volume discounts if you have 10+ file servers."
+          "recommendation": "Verify the license covers all file servers in scope. Unlicensed file servers are silently excluded from monitoring. Navigate to Admin > License to verify. Contact ManageEngine for volume discounts if you have 10+ file servers.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_lic_002",
           "text": "DLP (Data Leak Prevention) module is licensed and enabled",
-          "type": "PU",
+          "type": "INFO",
           "helpLink": "https://www.manageengine.com/data-security/data-loss-prevention.html",
-          "recommendation": "Ensure the DLP module license is active to enable endpoint DLP, USB control, and cloud upload monitoring. DLP is critical for GDPR, HIPAA compliance. Enable under Admin > License > DLP Module. Configure policies in DLP > Policy Management."
+          "recommendation": "Ensure the DLP module license is active to enable endpoint DLP, USB control, and cloud upload monitoring. DLP is critical for GDPR, HIPAA compliance. Enable under Admin > License > DLP Module. Configure policies in DLP > Policy Management.",
+          "statusOptions": [
+            "info"
+          ]
         },
         {
           "id": "dsp_lic_003",
           "text": "Cloud Protection (CASB) module is licensed if SaaS app monitoring is required",
-          "type": "PU",
+          "type": "INFO",
           "helpLink": "https://www.manageengine.com/data-security/casb-cloud-access-security-broker.html",
-          "recommendation": "License the CASB module to monitor data flows to cloud applications (SharePoint Online, OneDrive, Dropbox, Box, Google Drive). This is essential for detecting shadow IT, data exfiltration via cloud storage, and enforcing data handling policies for cloud apps."
+          "recommendation": "License the CASB module to monitor data flows to cloud applications (SharePoint Online, OneDrive, Dropbox, Box, Google Drive). This is essential for detecting shadow IT, data exfiltration via cloud storage, and enforcing data handling policies for cloud apps.",
+          "statusOptions": [
+            "info"
+          ]
         }
       ]
     },
     {
       "id": "file_auditing",
-      "name": "📁 File Auditing & Monitoring",
+      "name": "\ud83d\udcc1 File Auditing & Monitoring",
       "criteria": [
         {
           "id": "dsp_fa_001",
           "text": "All critical file servers (DFS, member servers) are added and actively auditing",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/help/file-auditing/adding-file-server.html",
-          "recommendation": "Add all file servers containing regulated data (PII, PCI, PHI) to DataSecurity Plus monitoring. Verify each shows 'Active' audit status. Missed file servers are compliance blind spots. Navigate to File Audit > File Servers to verify coverage."
+          "recommendation": "Add all file servers containing regulated data (PII, PCI, PHI) to DataSecurity Plus monitoring. Verify each shows 'Active' audit status. Missed file servers are compliance blind spots. Navigate to File Audit > File Servers to verify coverage.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_fa_002",
           "text": "SACL (System Access Control List) is configured correctly on all monitored shares",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/help/file-auditing/configuring-sacl.html",
-          "recommendation": "Use DataSecurity Plus's SACL configuration wizard to automatically apply correct audit entries to monitored shares. Missing or incorrect SACLs result in no file access events being generated. Validate with Event Viewer on the file server (look for Event 4663)."
+          "recommendation": "Use DataSecurity Plus's SACL configuration wizard to automatically apply correct audit entries to monitored shares. Missing or incorrect SACLs result in no file access events being generated. Validate with Event Viewer on the file server (look for Event 4663).",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_fa_003",
           "text": "File access auditing scope is properly defined (included/excluded folders and file types)",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/data-security/help/file-auditing/configuring-audit-scope.html",
-          "recommendation": "Define precise audit scope: include folders containing sensitive data, exclude temp files, operating system directories, and application binaries. Overly broad auditing generates excessive noise and performance overhead. Configure under File Audit > Audit Scope."
+          "recommendation": "Define precise audit scope: include folders containing sensitive data, exclude temp files, operating system directories, and application binaries. Overly broad auditing generates excessive noise and performance overhead. Configure under File Audit > Audit Scope.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_fa_004",
           "text": "File permission change auditing is enabled to track share/NTFS permission modifications",
           "type": "PU/HC",
           "helpLink": "https://www.manageengine.com/data-security/help/file-auditing/permission-audit.html",
-          "recommendation": "Enable permission change auditing to detect unauthorized access expansions. Attackers frequently modify NTFS or share permissions to gain or maintain persistent access to sensitive data stores. Configure permission change alerts in File Audit > Permission Audit."
+          "recommendation": "Enable permission change auditing to detect unauthorized access expansions. Attackers frequently modify NTFS or share permissions to gain or maintain persistent access to sensitive data stores. Configure permission change alerts in File Audit > Permission Audit.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_fa_005",
           "text": "NetApp, EMC, or NAS device auditing is configured if applicable",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/help/file-auditing/netapp-auditing.html",
-          "recommendation": "Configure NAS/filer auditing for NetApp ONTAP, Dell EMC Isilon, or Hitachi NAS if in scope. These devices require specific FPolicy (NetApp) or CEE (EMC) connector configuration. Navigate to File Audit > NAS Devices to add and configure."
+          "recommendation": "Configure NAS/filer auditing for NetApp ONTAP, Dell EMC Isilon, or Hitachi NAS if in scope. These devices require specific FPolicy (NetApp) or CEE (EMC) connector configuration. Navigate to File Audit > NAS Devices to add and configure.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "data_discovery",
-      "name": "🔍 Data Discovery & Classification",
+      "name": "\ud83d\udd0d Data Discovery & Classification",
       "criteria": [
         {
           "id": "dsp_dd_001",
           "text": "Data Discovery scan is scheduled and has completed baseline scan for all file servers",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/data-discovery.html",
-          "recommendation": "Run an initial Data Discovery baseline scan across all monitored file servers to identify and classify sensitive data (SSN, credit card numbers, health records, etc.). Schedule weekly incremental scans. Navigate to Data Discovery > Scan Configuration. This is foundational for GDPR Article 30 records of processing."
+          "recommendation": "Run an initial Data Discovery baseline scan across all monitored file servers to identify and classify sensitive data (SSN, credit card numbers, health records, etc.). Schedule weekly incremental scans. Navigate to Data Discovery > Scan Configuration. This is foundational for GDPR Article 30 records of processing.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_dd_002",
           "text": "AI-based content classification is configured and classification labels are applied",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/data-classification.html",
-          "recommendation": "Enable AI-powered content classification to automatically classify files into sensitivity categories (Public, Internal, Confidential, Restricted). Configure classification labels matching your data governance policy. AI classification significantly reduces false positives compared to regex-only classification."
+          "recommendation": "Enable AI-powered content classification to automatically classify files into sensitivity categories (Public, Internal, Confidential, Restricted). Configure classification labels matching your data governance policy. AI classification significantly reduces false positives compared to regex-only classification.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_dd_003",
           "text": "ROT (Redundant, Obsolete, Trivial) data analysis is run to reduce data risk footprint",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/rot-data-analysis.html",
-          "recommendation": "Run ROT analysis to identify: junk files, duplicate files, stale files (unaccessed >1 year), empty files, and orphaned files with no business owner. ROT data represents unnecessary regulatory risk—data you don't need should not be retained. Review ROT Report and coordinate with data owners for deletion."
+          "recommendation": "Run ROT analysis to identify: junk files, duplicate files, stale files (unaccessed >1 year), empty files, and orphaned files with no business owner. ROT data represents unnecessary regulatory risk\u2014data you don't need should not be retained. Review ROT Report and coordinate with data owners for deletion.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_dd_004",
           "text": "Custom classification rules are defined for organization-specific sensitive data patterns",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/help/data-classification/custom-classification.html",
-          "recommendation": "Create custom classification rules for organization-specific data patterns: employee IDs, internal project codes, customer account numbers, proprietary formulas. Navigate to Data Classification > Custom Rules. Regular expressions and keyword proximity rules can be combined for higher accuracy."
+          "recommendation": "Create custom classification rules for organization-specific data patterns: employee IDs, internal project codes, customer account numbers, proprietary formulas. Navigate to Data Classification > Custom Rules. Regular expressions and keyword proximity rules can be combined for higher accuracy.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "dlp",
-      "name": "🔒 Data Loss Prevention",
+      "name": "\ud83d\udd12 Data Loss Prevention",
       "criteria": [
         {
           "id": "dsp_dlp_001",
           "text": "DLP policies are configured and enforced for endpoint data protection",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/endpoint-dlp.html",
-          "recommendation": "Configure endpoint DLP policies to block or alert on: unauthorized USB storage use, Bluetooth file transfers, cloud upload of classified data, email attachments containing sensitive data, and screen capture of regulated content. Start in 'Alert Only' mode before switching to 'Block'."
+          "recommendation": "Configure endpoint DLP policies to block or alert on: unauthorized USB storage use, Bluetooth file transfers, cloud upload of classified data, email attachments containing sensitive data, and screen capture of regulated content. Start in 'Alert Only' mode before switching to 'Block'.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_dlp_002",
           "text": "USB/removable media controls are configured for data transfer prevention",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/usb-device-control.html",
-          "recommendation": "Implement USB device control policies using DataSecurity Plus. Block all unauthorized USB storage devices while allowing approved, encrypted USB devices (hardware-encrypted approved list). This prevents both insider data theft and malware introduction via USB. Configure in DLP > Device Control."
+          "recommendation": "Implement USB device control policies using DataSecurity Plus. Block all unauthorized USB storage devices while allowing approved, encrypted USB devices (hardware-encrypted approved list). This prevents both insider data theft and malware introduction via USB. Configure in DLP > Device Control.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_dlp_003",
           "text": "DLP policy templates for compliance frameworks (GDPR, HIPAA, PCI-DSS, CCPA) are deployed",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/data-loss-prevention.html",
-          "recommendation": "Leverage built-in DLP policy templates for major compliance frameworks. These templates include pre-configured detection patterns for regulated data types. Navigate to DLP > Policy Templates and deploy relevant frameworks. Customize thresholds to match your organizational risk tolerance."
+          "recommendation": "Leverage built-in DLP policy templates for major compliance frameworks. These templates include pre-configured detection patterns for regulated data types. Navigate to DLP > Policy Templates and deploy relevant frameworks. Customize thresholds to match your organizational risk tolerance.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_dlp_004",
           "text": "Cloud data upload monitoring (CASB) is configured for sanctioned and unsanctioned cloud apps",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/casb-cloud-access-security-broker.html",
-          "recommendation": "Configure CASB to monitor and control data flows to cloud applications. Create allow-lists for sanctioned apps (corporate OneDrive, SharePoint) and block/alert on unsanctioned apps (personal Dropbox, Gmail). Enforce data classification-based upload controls."
+          "recommendation": "Configure CASB to monitor and control data flows to cloud applications. Create allow-lists for sanctioned apps (corporate OneDrive, SharePoint) and block/alert on unsanctioned apps (personal Dropbox, Gmail). Enforce data classification-based upload controls.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "ransomware",
-      "name": "🚨 Ransomware Detection & Response",
+      "name": "\ud83d\udea8 Ransomware Detection & Response",
       "criteria": [
         {
           "id": "dsp_rw_001",
           "text": "Ransomware detection is enabled with honeypot files deployed on monitored shares",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/ransomware-detection.html",
-          "recommendation": "Enable ransomware detection and deploy decoy/honeypot files across monitored file shares. Ransomware typically encrypts files alphabetically, so honeypot files named with leading characters (e.g., '!AAAHoneypot.txt') will be hit early. Configure immediate automated response to isolate affected endpoints."
+          "recommendation": "Enable ransomware detection and deploy decoy/honeypot files across monitored file shares. Ransomware typically encrypts files alphabetically, so honeypot files named with leading characters (e.g., '!AAAHoneypot.txt') will be hit early. Configure immediate automated response to isolate affected endpoints.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_rw_002",
           "text": "Automated ransomware response (endpoint isolation, network blocking) is configured",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/ransomware-detection.html",
-          "recommendation": "Configure automated response actions for ransomware detection: immediately disable the source user account, block the source endpoint from network access (via firewall API or NAC), revoke active user sessions, and send emergency notifications to SOC. Test the response workflow monthly."
+          "recommendation": "Configure automated response actions for ransomware detection: immediately disable the source user account, block the source endpoint from network access (via firewall API or NAC), revoke active user sessions, and send emergency notifications to SOC. Test the response workflow monthly.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_rw_003",
           "text": "Mass encryption / mass file modification thresholds are configured for early ransomware detection",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/ransomware-detection.html",
-          "recommendation": "Configure threshold alerts for mass file operations: >50 file modifications in 60 seconds from a single user should trigger high-severity alert. >100 file renames with extension changes should trigger ransomware response workflow. These thresholds catch ransomware before significant damage occurs."
+          "recommendation": "Configure threshold alerts for mass file operations: >50 file modifications in 60 seconds from a single user should trigger high-severity alert. >100 file renames with extension changes should trigger ransomware response workflow. These thresholds catch ransomware before significant damage occurs.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "reports_alerts",
-      "name": "📊 Reports & Alerts",
+      "name": "\ud83d\udcca Reports & Alerts",
       "criteria": [
         {
           "id": "dsp_ra_001",
           "text": "Data access reports are regularly reviewed (who accessed what sensitive data)",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/help/reports/",
-          "recommendation": "Schedule weekly data access reports for all Confidential/Restricted classified files. Identify outliers: users accessing unusually large numbers of sensitive files, access outside business hours, access from new devices. Configure report delivery to data owners and DPO."
+          "recommendation": "Schedule weekly data access reports for all Confidential/Restricted classified files. Identify outliers: users accessing unusually large numbers of sensitive files, access outside business hours, access from new devices. Configure report delivery to data owners and DPO.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_ra_002",
           "text": "Permission analysis reports (open shares, excessive permissions) are reviewed",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/help/reports/permission-analysis.html",
-          "recommendation": "Run permission analysis reports quarterly to identify: shares accessible by Everyone/Authenticated Users, users with Write/Delete access to shares they shouldn't need, and broken inheritance chains. Excessive permissions are the primary enabler of insider data theft."
+          "recommendation": "Run permission analysis reports quarterly to identify: shares accessible by Everyone/Authenticated Users, users with Write/Delete access to shares they shouldn't need, and broken inheritance chains. Excessive permissions are the primary enabler of insider data theft.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "dsp_ra_003",
           "text": "Sensitive data exposure alerts are configured for new sensitive file creation in unsecured locations",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/data-security/help/alerts/",
-          "recommendation": "Configure alerts for sensitive data discovered in unsecured locations (public shares, desktop folders, unclassified repositories). When data discovery finds PII in an unprotected location, an automatic alert should notify the data owner and security team within 24 hours (GDPR requires breach notification within 72 hours)."
+          "recommendation": "Configure alerts for sensitive data discovered in unsecured locations (public shares, desktop folders, unclassified repositories). When data discovery finds PII in an unprotected location, an automatic alert should notify the data owner and security team within 24 hours (GDPR requires breach notification within 72 hours).",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     }

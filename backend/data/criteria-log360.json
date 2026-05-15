@@ -9,376 +9,556 @@
   "sections": [
     {
       "id": "services",
-      "name": "🖥️ Services & Infrastructure",
+      "name": "\ud83d\udda5\ufe0f Services & Infrastructure",
       "criteria": [
         {
           "id": "l360_svc_001",
           "text": "Log360 server is running with a dedicated service account (not LocalSystem or Administrator)",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/getting-started/system-requirements.html",
-          "recommendation": "Configure Log360 to run under a dedicated domain service account with minimum permissions. The service account needs: Log on as a service right, read access to integrated component APIs, and read access to SIEM data sources. Avoid Domain Admin membership."
+          "recommendation": "Configure Log360 to run under a dedicated domain service account with minimum permissions. The service account needs: Log on as a service right, read access to integrated component APIs, and read access to SIEM data sources. Avoid Domain Admin membership.",
+          "statusOptions": [
+            "correct",
+            "partial",
+            "incorrect"
+          ]
         },
         {
           "id": "l360_svc_002",
           "text": "Log360 is on the latest available build (13000 series)",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/release-notes.html",
-          "recommendation": "Update to the latest 13000-series build immediately. This series introduces major capabilities: AI Alert Investigation Agent, Zia AI Assistant, native SOAR, re-architected detection engine with 1,500+ MITRE ATT&CK rules, native UEBA integration, and Access Gateway Clusters. Check Admin > Product Updates."
+          "recommendation": "Update to the latest 13000-series build immediately. This series introduces major capabilities: AI Alert Investigation Agent, Zia AI Assistant, native SOAR, re-architected detection engine with 1,500+ MITRE ATT&CK rules, native UEBA integration, and Access Gateway Clusters. Check Admin > Product Updates.",
+          "statusOptions": [
+            "latest",
+            "one_behind",
+            "outdated",
+            "na"
+          ]
         },
         {
           "id": "l360_svc_003",
           "text": "Log360 server meets hardware requirements for integrated suite deployment",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/getting-started/system-requirements.html",
-          "recommendation": "Log360 integrates multiple components (EventLog Analyzer, ADAudit Plus, DataSecurity Plus) on the same platform. Ensure dedicated hardware: minimum 32GB RAM, 12 CPU cores, 1TB SSD for production. Log360 is the central nervous system of your security monitoring—inadequate resources cause event drops and alerting failures."
+          "recommendation": "Log360 integrates multiple components (EventLog Analyzer, ADAudit Plus, DataSecurity Plus) on the same platform. Ensure dedicated hardware: minimum 32GB RAM, 12 CPU cores, 1TB SSD for production. Log360 is the central nervous system of your security monitoring\u2014inadequate resources cause event drops and alerting failures.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_svc_004",
           "text": "External database (MSSQL/PostgreSQL) is configured for production",
-          "type": "HC",
+          "type": "INFO",
           "helpLink": "https://www.manageengine.com/log-management/help/getting-started/database-configuration.html",
-          "recommendation": "Use an external MSSQL or PostgreSQL database for all production Log360 deployments. External databases support HA, enterprise backup, and better query performance. Bundled databases are not suitable for enterprise-scale deployments. Configure under Admin > Database."
+          "recommendation": "Use an external MSSQL or PostgreSQL database for all production Log360 deployments. External databases support HA, enterprise backup, and better query performance. Bundled databases are not suitable for enterprise-scale deployments. Configure under Admin > Database.",
+          "statusOptions": [
+            "info"
+          ]
         },
         {
           "id": "l360_svc_005",
           "text": "High Availability (HA) is configured for the Log360 platform",
-          "type": "HC",
+          "type": "INFO",
           "helpLink": "https://www.manageengine.com/log-management/help/advanced-settings/high-availability.html",
-          "recommendation": "Configure Log360 HA to prevent single points of failure in your primary SIEM. HA failover should be tested quarterly. For distributed deployments, consider Active/Passive HA with automatic failover. A failed SIEM during an active incident is a critical operational failure."
-        },
-        {
-          "id": "l360_svc_006",
-          "text": "Access Gateway Clusters are configured for secure remote access to Log360 (March 2026 feature)",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/help/advanced-settings/access-gateway.html",
-          "recommendation": "Implement Access Gateway Clusters (introduced March 2026) for secure distributed/hybrid architecture access. This enables secure UI access without direct VPN to the Log360 server, supports zero-trust network access principles, and reduces attack surface for the SIEM console."
+          "recommendation": "Configure Log360 HA to prevent single points of failure in your primary SIEM. HA failover should be tested quarterly. For distributed deployments, consider Active/Passive HA with automatic failover. A failed SIEM during an active incident is a critical operational failure.",
+          "statusOptions": [
+            "info"
+          ]
         }
       ]
     },
     {
       "id": "licensing",
-      "name": "📋 Licensing & Component Integration",
+      "name": "\ud83d\udccb Licensing & Component Integration",
       "criteria": [
         {
           "id": "l360_lic_001",
           "text": "Log360 license includes all required component modules (ELA, ADAudit, DataSecurity Plus)",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/",
-          "recommendation": "Verify all required component licenses are active: EventLog Analyzer (log count), ADAudit Plus (DC count), DataSecurity Plus (file server count). Expired component licenses silently stop collection for that data source. Navigate to Admin > License to verify."
-        },
-        {
-          "id": "l360_lic_002",
-          "text": "SOAR module is licensed and enabled",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Ensure the native SOAR module license is active to enable incident response automation. SOAR is one of the most impactful capabilities in the 13000 series—it can dramatically reduce MTTR. Navigate to Admin > License > SOAR Module to verify."
-        },
-        {
-          "id": "l360_lic_003",
-          "text": "UEBA (User and Entity Behavior Analytics) is enabled as native capability",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Verify UEBA is enabled as a native feature in the 13000-series build. Note: UEBA is now natively integrated—there is no separate Log360 UEBA product. Navigate to Log360 > UEBA > Dashboard to confirm it's active and the anomaly models are running."
+          "recommendation": "Verify all required component licenses are active: EventLog Analyzer (log count), ADAudit Plus (DC count), DataSecurity Plus (file server count). Expired component licenses silently stop collection for that data source. Navigate to Admin > License to verify.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "ai_investigation",
-      "name": "🤖 AI Alert Investigation Agent",
+      "name": "\ud83e\udd16 AI Alert Investigation Agent",
       "criteria": [
         {
           "id": "l360_ai_001",
           "text": "AI Alert Investigation Agent is enabled and configured",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ai-alert-investigation.html",
-          "recommendation": "Enable the AI Alert Investigation Agent (new in 13000 series). This LLM-powered agent autonomously: extracts affected entities, maps alerts to MITRE ATT&CK tactics, generates attack timelines, suggests remediation steps, auto-closes false positives, and flags duplicate alerts. Navigate to AI > Alert Investigation Agent > Configure."
+          "recommendation": "Enable the AI Alert Investigation Agent (new in 13000 series). This LLM-powered agent autonomously: extracts affected entities, maps alerts to MITRE ATT&CK tactics, generates attack timelines, suggests remediation steps, auto-closes false positives, and flags duplicate alerts. Navigate to AI > Alert Investigation Agent > Configure.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ai_002",
           "text": "LLM provider is configured for AI Investigation Agent (OpenAI or Azure OpenAI)",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ai-alert-investigation.html",
-          "recommendation": "Configure the LLM backend for the AI Investigation Agent: choose between OpenAI (GPT-4) or Azure OpenAI (for compliance-sensitive environments where data must stay within your Azure tenant). Provide your API key via BYO (Bring Your Own) Key model. Configure under AI > LLM Settings > Provider Configuration."
+          "recommendation": "Configure the LLM backend for the AI Investigation Agent: choose between OpenAI (GPT-4) or Azure OpenAI (for compliance-sensitive environments where data must stay within your Azure tenant). Provide your API key via BYO (Bring Your Own) Key model. Configure under AI > LLM Settings > Provider Configuration.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ai_003",
           "text": "Auto-closure and duplicate flagging is configured for AI agent",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ai-alert-investigation.html",
-          "recommendation": "Configure the AI agent's auto-closure and deduplication settings. Start conservatively: enable auto-closure only for alerts with >95% confidence of being false positive, and require analyst review for medium-confidence auto-closures. This reduces alert backlog while maintaining human oversight."
+          "recommendation": "Configure the AI agent's auto-closure and deduplication settings. Start conservatively: enable auto-closure only for alerts with >95% confidence of being false positive, and require analyst review for medium-confidence auto-closures. This reduces alert backlog while maintaining human oversight.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ai_004",
           "text": "Zia AI Assistant (natural language query) is configured and analyst team is trained",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/zia-ai-assistant.html",
-          "recommendation": "Enable Zia AI Assistant to allow analysts to query logs and incidents using natural language ('Show all failed logons from external IPs in the last 24 hours'). Train analysts to use Zia for investigation acceleration. Configure under AI > Zia Settings. Zia can reduce investigation time by 60-80%."
+          "recommendation": "Enable Zia AI Assistant to allow analysts to query logs and incidents using natural language ('Show all failed logons from external IPs in the last 24 hours'). Train analysts to use Zia for investigation acceleration. Configure under AI > Zia Settings. Zia can reduce investigation time by 60-80%.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ai_005",
           "text": "MITRE ATT&CK attack timeline generation is enabled in AI Agent",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ai-alert-investigation.html",
-          "recommendation": "Enable attack timeline generation in the AI Investigation Agent. For each security incident, the AI agent automatically generates a chronological timeline of events mapped to MITRE ATT&CK stages. This dramatically improves incident response quality and reduces analyst cognitive load during crisis situations."
+          "recommendation": "Enable attack timeline generation in the AI Investigation Agent. For each security incident, the AI agent automatically generates a chronological timeline of events mapped to MITRE ATT&CK stages. This dramatically improves incident response quality and reduces analyst cognitive load during crisis situations.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "soar",
-      "name": "⚡ Native SOAR",
+      "name": "\u26a1 Native SOAR",
       "criteria": [
         {
           "id": "l360_soar_001",
           "text": "SOAR playbooks are created for critical incident types (phishing, account compromise, ransomware)",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Create SOAR playbooks for your top 3-5 incident types. Use the low-code playbook builder in Log360's native SOAR. Prioritize: Account Compromise Response, Ransomware Containment, Phishing Response, DDoS Mitigation, Insider Threat Response. Use pre-built templates as starting points."
+          "recommendation": "Create SOAR playbooks for your top 3-5 incident types. Use the low-code playbook builder in Log360's native SOAR. Prioritize: Account Compromise Response, Ransomware Containment, Phishing Response, DDoS Mitigation, Insider Threat Response. Use pre-built templates as starting points.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_soar_002",
           "text": "Pre-built incident response templates are customized and deployed",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Review and customize all pre-built SOAR incident response templates provided in the template library. Customize: notification recipients, escalation thresholds, approved remediation actions, and approval workflows for destructive actions. Document the business justification for each automated action."
+          "recommendation": "Review and customize all pre-built SOAR incident response templates provided in the template library. Customize: notification recipients, escalation thresholds, approved remediation actions, and approval workflows for destructive actions. Document the business justification for each automated action.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_soar_003",
           "text": "Automated response actions are configured and tested (endpoint isolation, session revocation, artifact enrichment)",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Configure and test automated response actions in SOAR: endpoint isolation via EDR API (CrowdStrike, BitDefender), Active Directory account disable, Kerberos ticket revocation, IP blocking via firewall API, and VirusTotal hash lookup for artifact enrichment. Test each action in a staging environment before production deployment."
+          "recommendation": "Configure and test automated response actions in SOAR: endpoint isolation via EDR API (CrowdStrike, BitDefender), Active Directory account disable, Kerberos ticket revocation, IP blocking via firewall API, and VirusTotal hash lookup for artifact enrichment. Test each action in a staging environment before production deployment.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_soar_004",
           "text": "Python/Deluge SOAR scripts are version-controlled and peer-reviewed",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Store all SOAR playbook code (Python/Deluge scripts) in version control (Git). Require peer review for all production playbook changes. Malicious or buggy SOAR code can cause production outages or unintended security actions. Maintain staging and production playbook environments."
+          "recommendation": "Store all SOAR playbook code (Python/Deluge scripts) in version control (Git). Require peer review for all production playbook changes. Malicious or buggy SOAR code can cause production outages or unintended security actions. Maintain staging and production playbook environments.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_soar_005",
           "text": "Zoho Qntrl integration is configured for advanced workflow orchestration if applicable",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Configure Zoho Qntrl integration if you use Zoho's business process automation platform. This enables no-code workflow creation, approval workflows, SLA tracking, and integration with 500+ business applications through Qntrl's connector library."
+          "recommendation": "Configure Zoho Qntrl integration if you use Zoho's business process automation platform. This enables no-code workflow creation, approval workflows, SLA tracking, and integration with 500+ business applications through Qntrl's connector library.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_soar_006",
           "text": "SOAR playbook execution logs are reviewed and MTTR improvement is tracked",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/soar.html",
-          "recommendation": "Regularly review SOAR execution logs to: track automated actions taken, identify playbook failures, measure MTTR improvement vs. manual response. Target: 80% reduction in MTTR for automated incident types. Navigate to SOAR > Execution History to review performance metrics."
+          "recommendation": "Regularly review SOAR execution logs to: track automated actions taken, identify playbook failures, measure MTTR improvement vs. manual response. Target: 80% reduction in MTTR for automated incident types. Navigate to SOAR > Execution History to review performance metrics.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "detection_engine",
-      "name": "🎯 Detection Engine",
+      "name": "\ud83c\udfaf Detection Engine",
       "criteria": [
         {
           "id": "l360_det_001",
           "text": "Re-architected detection engine (13000 series) is active with central detection console",
           "type": "PU/HC",
           "helpLink": "https://www.manageengine.com/log-management/detection-engine.html",
-          "recommendation": "Verify the new detection engine in the 13000 series is fully operational. The re-architected engine provides: central detection console, object-level filters, cloud-delivered rule updates, and 1,500+ MITRE ATT&CK-aligned detection rules. Navigate to Detection > Detection Console to verify status."
-        },
-        {
-          "id": "l360_det_002",
-          "text": "1,500+ cloud-delivered MITRE ATT&CK-aligned detection rules are enabled and up-to-date",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/detection-engine.html",
-          "recommendation": "Ensure all 1,500+ cloud-delivered detection rules are enabled and synced with the latest updates. These rules cover all MITRE ATT&CK tactics and techniques with real-world threat actor TTPs. Enable automatic rule updates to stay current with emerging threats. Navigate to Detection > Rules > Update Rules."
-        },
-        {
-          "id": "l360_det_003",
-          "text": "Object-level filters are configured in the detection engine for noise reduction",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/detection-engine.html",
-          "recommendation": "Configure object-level filters to exclude known-good entities from detection rules: service account authentication, scheduled backup tasks, monitoring agent activities. Well-tuned object-level filters reduce false positive rate without weakening detection coverage. Navigate to Detection > Detection Rules > Filter Configuration."
+          "recommendation": "Verify the new detection engine in the 13000 series is fully operational. The re-architected engine provides: central detection console, object-level filters, cloud-delivered rule updates, and 1,500+ MITRE ATT&CK-aligned detection rules. Navigate to Detection > Detection Console to verify status.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_det_004",
           "text": "Custom detection rules are created for organization-specific threat models",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/detection-engine.html",
-          "recommendation": "Supplement cloud-delivered rules with custom detection rules based on your specific threat model: insider threat scenarios, supply chain attack patterns, environment-specific attack paths. Use the rule builder to create rules without writing code. Document each custom rule's threat hypothesis."
+          "recommendation": "Supplement cloud-delivered rules with custom detection rules based on your specific threat model: insider threat scenarios, supply chain attack patterns, environment-specific attack paths. Use the rule builder to create rules without writing code. Document each custom rule's threat hypothesis.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "ueba",
-      "name": "📈 UEBA (User & Entity Behavior Analytics)",
+      "name": "\ud83d\udcc8 UEBA (User & Entity Behavior Analytics)",
       "criteria": [
         {
           "id": "l360_ueba_001",
           "text": "UEBA anomaly models are active and baseline learning period has completed (30+ days)",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Allow UEBA at least 30 days of baseline data collection before enabling anomaly alerts. Premature alert activation causes excessive false positives. Monitor the baseline completeness indicator in UEBA > Model Status. The 13000-series UEBA is natively integrated into the alert triage workflow."
+          "recommendation": "Allow UEBA at least 30 days of baseline data collection before enabling anomaly alerts. Premature alert activation causes excessive false positives. Monitor the baseline completeness indicator in UEBA > Model Status. The 13000-series UEBA is natively integrated into the alert triage workflow.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ueba_002",
           "text": "User risk scoring is configured and high-risk users are reviewed daily",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Configure user risk scoring thresholds and establish a daily review process for users with risk score >80. UEBA risk scores aggregate multiple weak signals into a composite risk indicator. Integrate risk scores into alert triage—a medium-severity alert from a high-risk user should auto-escalate."
+          "recommendation": "Configure user risk scoring thresholds and establish a daily review process for users with risk score >80. UEBA risk scores aggregate multiple weak signals into a composite risk indicator. Integrate risk scores into alert triage\u2014a medium-severity alert from a high-risk user should auto-escalate.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ueba_003",
           "text": "Identity anomaly detection is enabled (impossible travel, new device, unusual hours)",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Enable identity anomaly detection models: impossible travel (logon from two geographically impossible locations within a short window), new device authentication, logon outside established hours, unusual access volume. These are among the most reliable indicators of account compromise."
+          "recommendation": "Enable identity anomaly detection models: impossible travel (logon from two geographically impossible locations within a short window), new device authentication, logon outside established hours, unusual access volume. These are among the most reliable indicators of account compromise.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ueba_004",
           "text": "Privilege escalation detection is enabled and generating actionable alerts",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Enable UEBA privilege escalation detection models. The 13000-series UEBA includes native detection for: unusual privilege use, new admin group membership, service account used interactively, and role expansion outside change windows. Configure these to trigger high-priority alerts surfaced in SIEM alert triage."
+          "recommendation": "Enable UEBA privilege escalation detection models. The 13000-series UEBA includes native detection for: unusual privilege use, new admin group membership, service account used interactively, and role expansion outside change windows. Configure these to trigger high-priority alerts surfaced in SIEM alert triage.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ueba_005",
           "text": "UEBA alerts are surfaced within Log360 SIEM alert triage workflow",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Verify that UEBA anomaly alerts are integrated with the main Log360 alert console. In the 13000 series, UEBA is natively integrated—anomaly alerts should appear in the main Incidents dashboard with MITRE ATT&CK context. If UEBA alerts are isolated in a separate module, enable the native integration."
+          "recommendation": "Verify that UEBA anomaly alerts are integrated with the main Log360 alert console. In the 13000 series, UEBA is natively integrated\u2014anomaly alerts should appear in the main Incidents dashboard with MITRE ATT&CK context. If UEBA alerts are isolated in a separate module, enable the native integration.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_ueba_006",
           "text": "Entity analytics (servers, applications) are enabled in addition to user analytics",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/ueba.html",
-          "recommendation": "Enable entity-level behavior analytics for servers and applications in addition to user analytics. Server anomalies (unusual outbound connections, process execution patterns, login patterns) are critical for detecting malware activity, C2 communication, and data staging. Navigate to UEBA > Entity Analytics."
+          "recommendation": "Enable entity-level behavior analytics for servers and applications in addition to user analytics. Server anomalies (unusual outbound connections, process execution patterns, login patterns) are critical for detecting malware activity, C2 communication, and data staging. Navigate to UEBA > Entity Analytics.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "integrations",
-      "name": "🔌 Integrations",
+      "name": "\ud83d\udd0c Integrations",
       "criteria": [
-        {
-          "id": "l360_int_001",
-          "text": "CrowdStrike Falcon EDR integration is configured for endpoint telemetry and response",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/integrations/crowdstrike.html",
-          "recommendation": "Configure CrowdStrike Falcon integration via API to: pull endpoint telemetry (process activity, network connections, file writes) into Log360, enable automated endpoint isolation via SOAR, and enrich Log360 alerts with endpoint context. Navigate to Admin > Integrations > EDR > CrowdStrike."
-        },
-        {
-          "id": "l360_int_002",
-          "text": "BitDefender or other EDR integration is configured",
-          "type": "PU",
-          "helpLink": "https://www.manageengine.com/log-management/integrations/",
-          "recommendation": "Configure your EDR/AV solution integration (BitDefender GravityZone, Microsoft Defender for Endpoint, SentinelOne, etc.) to forward detection events to Log360. EDR telemetry significantly improves detection fidelity by adding process and memory-level visibility unavailable from Windows Event Logs alone."
-        },
         {
           "id": "l360_int_003",
           "text": "Centralized integration management is configured for all connected products",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/integrations/",
-          "recommendation": "Use Log360's Centralized Integration Management console to manage all product integrations from a single interface. Verify all integration health statuses are green. Configure alerts for integration health failures to detect when an integration silently stops working. Navigate to Admin > Integrations > Integration Health."
+          "recommendation": "Use Log360's Centralized Integration Management console to manage all product integrations from a single interface. Verify all integration health statuses are green. Configure alerts for integration health failures to detect when an integration silently stops working. Navigate to Admin > Integrations > Integration Health.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_int_004",
           "text": "NetFlow Analyzer integration is configured for network traffic visibility",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/integrations/netflow-analyzer.html",
-          "recommendation": "Configure the native NetFlow Analyzer integration to add network flow data to Log360 SIEM. NetFlow data enables: detection of data exfiltration by volume, C2 beaconing patterns, lateral movement by connection patterns, and DNS tunneling. Navigate to Admin > Integrations > ManageEngine > NetFlow Analyzer."
+          "recommendation": "Configure the native NetFlow Analyzer integration to add network flow data to Log360 SIEM. NetFlow data enables: detection of data exfiltration by volume, C2 beaconing patterns, lateral movement by connection patterns, and DNS tunneling. Navigate to Admin > Integrations > ManageEngine > NetFlow Analyzer.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_int_005",
           "text": "Firewall Analyzer integration is configured for firewall log correlation",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/integrations/firewall-analyzer.html",
-          "recommendation": "Configure the native Firewall Analyzer integration to forward firewall audit logs to Log360. This enables cross-product correlation: a firewall policy change correlated with failed VPN authentication attempts points to an attacker attempting to disable perimeter controls. Navigate to Admin > Integrations > ManageEngine > Firewall Analyzer."
+          "recommendation": "Configure the native Firewall Analyzer integration to forward firewall audit logs to Log360. This enables cross-product correlation: a firewall policy change correlated with failed VPN authentication attempts points to an attacker attempting to disable perimeter controls. Navigate to Admin > Integrations > ManageEngine > Firewall Analyzer.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_int_006",
           "text": "OpManager network monitoring integration is configured for operational context",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/integrations/opmanager.html",
-          "recommendation": "Configure OpManager audit log forwarding to Log360. Network device operational events (interface down, device unreachable, configuration change) provide context that distinguishes security incidents from operational issues. Correlate OpManager events with security events for better incident classification."
+          "recommendation": "Configure OpManager audit log forwarding to Log360. Network device operational events (interface down, device unreachable, configuration change) provide context that distinguishes security incidents from operational issues. Correlate OpManager events with security events for better incident classification.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_int_007",
           "text": "ServiceDesk Plus / ITSM integration is configured for automated incident ticket creation",
-          "type": "PU",
+          "type": "INFO",
           "helpLink": "https://www.manageengine.com/log-management/integrations/servicedesk-plus.html",
-          "recommendation": "Configure bidirectional ITSM integration: Log360 auto-creates incident tickets for high-severity alerts, and resolved tickets automatically close Log360 incidents. This creates an accountable incident management process and provides audit evidence of response activities. Navigate to Admin > Integrations > ITSM."
+          "recommendation": "Configure bidirectional ITSM integration: Log360 auto-creates incident tickets for high-severity alerts, and resolved tickets automatically close Log360 incidents. This creates an accountable incident management process and provides audit evidence of response activities. Navigate to Admin > Integrations > ITSM.",
+          "statusOptions": [
+            "info"
+          ]
         }
       ]
     },
     {
       "id": "incident_management",
-      "name": "🎫 Incident Management",
+      "name": "\ud83c\udfab Incident Management",
       "criteria": [
         {
           "id": "l360_inc_001",
           "text": "Incident workflow is defined with severity levels, assignment rules, and SLAs",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/help/incidents/",
-          "recommendation": "Define incident management workflows: severity classification (P1-P4), auto-assignment rules (route cloud incidents to cloud team), SLA targets (P1: 1hr, P2: 4hr, P3: 24hr, P4: 72hr), and escalation procedures. Navigate to Incidents > Workflow Configuration."
+          "recommendation": "Define incident management workflows: severity classification (P1-P4), auto-assignment rules (route cloud incidents to cloud team), SLA targets (P1: 1hr, P2: 4hr, P3: 24hr, P4: 72hr), and escalation procedures. Navigate to Incidents > Workflow Configuration.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_inc_002",
           "text": "Incident timeline and evidence documentation is used for all security incidents",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/help/incidents/",
-          "recommendation": "Train analysts to use Log360's incident timeline feature to document: timeline of events, affected systems, actions taken, evidence collected, and post-incident findings. This documentation is required for regulatory reporting (GDPR breach notification, PCI incident response documentation)."
+          "recommendation": "Train analysts to use Log360's incident timeline feature to document: timeline of events, affected systems, actions taken, evidence collected, and post-incident findings. This documentation is required for regulatory reporting (GDPR breach notification, PCI incident response documentation).",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "compliance",
-      "name": "📋 Compliance & Reporting",
+      "name": "\ud83d\udccb Compliance & Reporting",
       "criteria": [
         {
           "id": "l360_comp_001",
           "text": "Expanded compliance packs are deployed for applicable frameworks",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/compliance-management.html",
-          "recommendation": "Deploy all applicable compliance packs from the Log360 marketplace: PCI-DSS, HIPAA, SOX, GDPR, ISO 27001, NIST CSF, FISMA, CCPA, and industry-specific frameworks. Compliance packs provide pre-built dashboards, reports, and alert rules mapped to control requirements. Navigate to Compliance > Marketplace."
+          "recommendation": "Deploy all applicable compliance packs from the Log360 marketplace: PCI-DSS, HIPAA, SOX, GDPR, ISO 27001, NIST CSF, FISMA, CCPA, and industry-specific frameworks. Compliance packs provide pre-built dashboards, reports, and alert rules mapped to control requirements. Navigate to Compliance > Marketplace.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_comp_002",
           "text": "Compliance dashboard shows current compliance posture for all frameworks",
           "type": "PU",
           "helpLink": "https://www.manageengine.com/log-management/compliance-management.html",
-          "recommendation": "Configure the compliance dashboard to show real-time compliance posture for all applicable frameworks. Schedule automated compliance reports for delivery to GRC team, auditors, and CISO. Use the compliance gap analysis to prioritize remediation efforts."
+          "recommendation": "Configure the compliance dashboard to show real-time compliance posture for all applicable frameworks. Schedule automated compliance reports for delivery to GRC team, auditors, and CISO. Use the compliance gap analysis to prioritize remediation efforts.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
       "id": "admin_security",
-      "name": "🔒 Admin & Security Hardening",
+      "name": "\ud83d\udd12 Admin & Security Hardening",
       "criteria": [
         {
           "id": "l360_sec_001",
           "text": "HTTPS / TLS 1.2+ is enforced with valid SSL certificate and weak ciphers disabled",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/admin-settings/ssl-configuration.html",
-          "recommendation": "Enforce HTTPS-only access to Log360 console. Configure TLS 1.2+ with strong cipher suites (AES-256, SHA-256). Disable: TLS 1.0, TLS 1.1, SSLv3, RC4, DES, 3DES, NULL ciphers, EXPORT ciphers. Install a certificate from your enterprise CA. Configure HTTP to HTTPS redirect."
+          "recommendation": "Enforce HTTPS-only access to Log360 console. Configure TLS 1.2+ with strong cipher suites (AES-256, SHA-256). Disable: TLS 1.0, TLS 1.1, SSLv3, RC4, DES, 3DES, NULL ciphers, EXPORT ciphers. Install a certificate from your enterprise CA. Configure HTTP to HTTPS redirect.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_sec_002",
           "text": "Two-factor authentication is mandatory for all Log360 administrator accounts",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/admin-settings/two-factor-authentication.html",
-          "recommendation": "Enforce 2FA for all Log360 accounts, especially administrators. Log360 provides visibility into your entire security posture—a compromised admin account would allow attackers to disable alerts, delete evidence, and view your detection capabilities. Enable under Admin > Security > MFA."
+          "recommendation": "Enforce 2FA for all Log360 accounts, especially administrators. Log360 provides visibility into your entire security posture\u2014a compromised admin account would allow attackers to disable alerts, delete evidence, and view your detection capabilities. Enable under Admin > Security > MFA.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_sec_003",
           "text": "Product activity audit log is enabled and protected from modification",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/admin-settings/",
-          "recommendation": "Enable and protect the Log360 product activity audit log. This log must capture: who logged in, what reports/queries they ran, what configuration changes were made, and what data was exported. This is critical for detecting insider misuse of the SIEM and maintaining audit chain of custody."
+          "recommendation": "Enable and protect the Log360 product activity audit log. This log must capture: who logged in, what reports/queries they ran, what configuration changes were made, and what data was exported. This is critical for detecting insider misuse of the SIEM and maintaining audit chain of custody.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
           "id": "l360_sec_004",
           "text": "Log collection failure alerting is configured for critical log sources",
           "type": "HC",
           "helpLink": "https://www.manageengine.com/log-management/help/admin-settings/",
-          "recommendation": "Configure alerts for log collection failures on critical sources (DCs, firewalls, WAF, critical servers). A silent log source failure creates a security blind spot—attackers know to target systems that aren't being monitored. Set threshold: alert if source silent >15 minutes for critical, >60 minutes for standard sources."
+          "recommendation": "Configure alerts for log collection failures on critical sources (DCs, firewalls, WAF, critical servers). A silent log source failure creates a security blind spot\u2014attackers know to target systems that aren't being monitored. Set threshold: alert if source silent >15 minutes for critical, >60 minutes for standard sources.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360_ai_enabled",
+          "text": "AI is enabled",
+          "type": "HC",
+          "statusOptions": [
+            "yes",
+            "no"
+          ],
+          "helpLink": "",
+          "recommendation": "Enable AI features in Log360 to unlock AI Alert Investigation Agent, Zia AI Assistant, and AI-powered anomaly detection. Navigate to Admin > AI Settings to enable."
         }
       ]
     }

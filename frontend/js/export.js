@@ -3,15 +3,61 @@
  * Uses jsPDF + html2canvas (loaded via CDN) for PDF
  */
 
+const STATUS_DISPLAY = {
+  configured:     { label: '✅ Configured',           weight: 1.0 },
+  partial:        { label: '⚠️ Partially Configured', weight: 0.5 },
+  not_configured: { label: '❌ Not Configured',        weight: 0.0 },
+  na:             { label: '➖ Not Applicable',        weight: null },
+  info:           { label: 'ℹ️ Informational',        weight: null },
+  yes:            { label: '✅ Yes',                   weight: 1.0 },
+  no:             { label: '❌ No',                    weight: 0.0 },
+  latest:         { label: '✅ Latest',                weight: 1.0 },
+  one_behind:     { label: '⚠️ 1 Build Behind',       weight: 0.5 },
+  outdated:       { label: '❌ Outdated',              weight: 0.0 },
+  all:            { label: '✅ All',                   weight: 1.0 },
+  some:           { label: '⚠️ Some',                 weight: 0.5 },
+  none:           { label: '❌ None',                  weight: 0.0 },
+  correct:        { label: '✅ Correct',               weight: 1.0 },
+  incorrect:      { label: '❌ Incorrect',             weight: 0.0 },
+};
+
+const ABBR_GLOSSARY = {
+  'HC':    'Health Check',
+  'PU':    'Product Utilization',
+  'PU/HC': 'Product Utilization & Health Check',
+  'HC/PU': 'Health Check & Product Utilization',
+  'INFO':  'Informational (not scored)',
+  'SACL':  'System Access Control List',
+  'FIM':   'File Integrity Monitoring',
+  'DC':    'Domain Controller',
+  'SIEM':  'Security Information and Event Management',
+  'DLP':   'Data Loss Prevention',
+  'MFA':   'Multi-Factor Authentication',
+  'GDPR':  'General Data Protection Regulation',
+  'SMTP':  'Simple Mail Transfer Protocol',
+  'SMS':   'Short Message Service',
+  'NAT':   'Network Address Translation',
+  'AD':    'Active Directory',
+  'ROT':   'Redundant/Obsolete/Trivial',
+  'CASB':  'Cloud Access Security Broker',
+  'ITDR':  'Identity Threat Detection and Response',
+  'HA':    'High Availability',
+  'SSL':   'Secure Sockets Layer',
+  'TLS':   'Transport Layer Security',
+};
+
+window.STATUS_DISPLAY = STATUS_DISPLAY;
+window.ABBR_GLOSSARY  = ABBR_GLOSSARY;
+
 const ExportUtils = {
 
   /* ===== CSV Export ===== */
-  exportCSV(assessmentData, criteriaByComponent) {
+  exportCSV(assessmentData, criteriaByComponent, componentScores, selectedComponents) {
     const rows = [
       ['Customer', 'Component', 'Section', 'Criteria ID', 'Criteria Text', 'Type', 'Status', 'HC Weight', 'PU Weight', 'Notes', 'Recommendation']
     ];
 
-    const COMPONENTS = ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'];
+    const COMPONENTS = selectedComponents || ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'];
     const NAMES = {
       adaudit:      'ADAudit Plus',
       dataSecurity: 'DataSecurity Plus',
@@ -29,28 +75,22 @@ const ExportUtils = {
       const compData = (assessmentData.components || {})[comp] || {};
       const statuses = compData.criteria_statuses || {};
       const notes    = compData.criteria_notes    || {};
-      const customRecs = {};
 
       template.sections.forEach(section => {
         section.criteria.forEach(crit => {
-          const status = statuses[crit.id] || 'not_configured';
-          const statusLabel = {
-            configured:     '✅ Configured',
-            partial:        '⚠️ Partial',
-            not_configured: '❌ Not Configured',
-            na:             '➖ N/A'
-          }[status] || status;
+          const status = statuses[crit.id] || (crit.statusOptions?.[0] || 'not_configured');
+          const statusLabel = STATUS_DISPLAY[status]?.label || status;
 
           rows.push([
             assessmentData.customer_name,
-            NAMES[comp],
+            NAMES[comp] || comp,
             section.name.replace(/[\u{1F000}-\u{EFFFF}]/gu, '').trim(),
             crit.id,
             crit.text,
             crit.type,
             statusLabel,
-            crit.type.includes('HC') ? '1' : '0',
-            crit.type.includes('PU') ? '1' : '0',
+            crit.type !== 'INFO' && crit.type.includes('HC') ? '1' : '0',
+            crit.type !== 'INFO' && crit.type.includes('PU') ? '1' : '0',
             (notes[crit.id] || '').replace(/[\n\r]/g, ' '),
             (crit.recommendation || '').replace(/[\n\r]/g, ' ')
           ]);
@@ -64,13 +104,13 @@ const ExportUtils = {
 
     this._downloadFile(
       csv,
-      `Log360-HealthCheck-${assessmentData.customer_name}-${assessmentData.assessment_date}.csv`,
+      `HCT-${assessmentData.customer_name}-${assessmentData.assessment_date}.csv`,
       'text/csv'
     );
   },
 
   /* ===== Standalone HTML Export ===== */
-  exportHTML(assessmentData, criteriaByComponent, componentScores) {
+  exportHTML(assessmentData, criteriaByComponent, componentScores, selectedComponents) {
     const NAMES = {
       adaudit:      'ADAudit Plus',
       dataSecurity: 'DataSecurity Plus',
@@ -79,21 +119,7 @@ const ExportUtils = {
       log360cloud:  'Log360 Cloud'
     };
 
-    const statusEmoji = {
-      configured:     '✅',
-      partial:        '⚠️',
-      not_configured: '❌',
-      na:             '➖'
-    };
-
-    const statusLabel = {
-      configured:     'Configured',
-      partial:        'Partially Configured',
-      not_configured: 'Not Configured',
-      na:             'Not Applicable'
-    };
-
-    const COMPONENTS = ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'];
+    const COMPONENTS = selectedComponents || ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'];
 
     let compSectionsHtml = '';
 
@@ -112,13 +138,15 @@ const ExportUtils = {
       template.sections.forEach(section => {
         let rowsHtml = '';
         section.criteria.forEach(crit => {
-          const st = statuses[crit.id] || 'not_configured';
+          const st = statuses[crit.id] || (crit.statusOptions?.[0] || 'not_configured');
           const noteText = notes[crit.id] || '';
+          const stInfo = STATUS_DISPLAY[st] || { label: st };
+          const typeLabel = crit.type === 'INFO' ? 'ℹ️ INFO' : crit.type;
           rowsHtml += `
             <tr class="status-${st}">
-              <td>${crit.type}</td>
+              <td>${this._esc(typeLabel)}</td>
               <td>${this._esc(crit.text)}</td>
-              <td>${statusEmoji[st]} ${statusLabel[st]}</td>
+              <td>${this._esc(stInfo.label)}</td>
               <td>${this._esc(noteText)}</td>
             </tr>`;
         });
@@ -139,11 +167,7 @@ const ExportUtils = {
       });
 
       // Recommendations for this component
-      const recs = Recommendations.generateRecommendations(
-        template.sections,
-        statuses,
-        {}
-      );
+      const recs = Recommendations.generateRecommendations(template.sections, statuses, {});
 
       let recsHtml = recs.length === 0
         ? '<p style="color:#2d9e59;">✅ No recommendations — all items configured.</p>'
@@ -157,7 +181,7 @@ const ExportUtils = {
       compSectionsHtml += `
         <div style="page-break-before:always;">
           <h3 style="background:#1a3e72;color:#fff;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:16px;">
-            ${NAMES[comp]}
+            ${NAMES[comp] || comp}
             <span style="float:right;font-size:13px;font-weight:normal;">
               HC: ${scores.hcScore}% &nbsp;|&nbsp; PU: ${scores.puScore}%
             </span>
@@ -181,12 +205,18 @@ const ExportUtils = {
     const overallHC = this._weightedAvg(componentScores, 'hcScore', assessmentData.component_weights || {});
     const overallPU = this._weightedAvg(componentScores, 'puScore', assessmentData.component_weights || {});
 
+    // Build glossary section
+    const glossaryRows = Object.entries(ABBR_GLOSSARY).map(([abbr, def]) =>
+      `<tr><td style="padding:4px 8px;border:1px solid #dde3ef;font-weight:600;width:80px;">${this._esc(abbr)}</td>` +
+      `<td style="padding:4px 8px;border:1px solid #dde3ef;">${this._esc(def)}</td></tr>`
+    ).join('');
+
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Log360 Health Check Report — ${this._esc(assessmentData.customer_name)}</title>
+<title>HCT Health Check Report — ${this._esc(assessmentData.customer_name)}</title>
 <style>
   body { font-family: 'Segoe UI', Arial, sans-serif; color: #1c2a3a; margin: 0; padding: 0; font-size: 13px; }
   .cover { background: linear-gradient(135deg, #1a3e72, #2a5298); color: #fff; padding: 60px 40px; text-align: center; }
@@ -195,20 +225,19 @@ const ExportUtils = {
   .meta-table { margin: 20px auto; border-collapse: collapse; }
   .meta-table td { padding: 6px 14px; border: 1px solid rgba(255,255,255,0.3); font-size: 13px; }
   .meta-table td:first-child { font-weight: 600; background: rgba(0,0,0,0.15); }
-  .overall-scores { background: #f0f4fa; padding: 30px 40px; display: flex; gap: 20px; justify-content: center; }
-  .score-box { background: #fff; border-radius: 10px; padding: 20px 30px; text-align: center; min-width: 160px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
   .content { padding: 30px 40px; }
-  tr.status-configured   { background: rgba(45,158,89,0.05); }
-  tr.status-not_configured { background: rgba(220,53,69,0.05); }
-  tr.status-partial      { background: rgba(232,156,40,0.07); }
-  tr.status-na           { opacity: 0.6; }
+  tr.status-configured, tr.status-yes, tr.status-latest, tr.status-all, tr.status-correct { background: rgba(45,158,89,0.05); }
+  tr.status-not_configured, tr.status-no, tr.status-outdated, tr.status-none, tr.status-incorrect { background: rgba(220,53,69,0.05); }
+  tr.status-partial, tr.status-one_behind, tr.status-some { background: rgba(232,156,40,0.07); }
+  tr.status-na, tr.status-info { opacity: 0.6; }
+  abbr { text-decoration: underline dotted; cursor: help; }
   @media print { .cover { page-break-after: always; } }
 </style>
 </head>
 <body>
 <div class="cover">
   <div style="font-size:36px;margin-bottom:16px;">🛡️</div>
-  <h1>Log360 Health Check &amp; Scorecard</h1>
+  <h1>HCT Health Check &amp; Scorecard</h1>
   <div class="sub">Product Utilization &amp; Security Assessment Report</div>
   <table class="meta-table">
     <tr><td>Customer</td><td>${this._esc(assessmentData.customer_name)}</td></tr>
@@ -226,7 +255,7 @@ const ExportUtils = {
     ${COMPONENTS.map(c => {
       const s = componentScores[c] || { hcScore: 0, puScore: 0 };
       return `<div style="background:#f8f9fc;border:1px solid #dde3ef;border-radius:8px;padding:14px 20px;min-width:140px;text-align:center;">
-        <div style="font-weight:700;font-size:13px;margin-bottom:8px;">${NAMES[c]}</div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:8px;">${NAMES[c] || c}</div>
         <div style="font-size:22px;font-weight:700;color:#2a5298;">${s.hcScore}%</div>
         <div style="font-size:11px;color:#6b7a9a;">Health Check</div>
         <div style="font-size:22px;font-weight:700;color:#2d9e59;margin-top:4px;">${s.puScore}%</div>
@@ -238,15 +267,22 @@ const ExportUtils = {
 
 <div style="padding:0 40px 40px;">${compSectionsHtml}</div>
 
+<div style="padding:30px 40px;border-top:2px solid #dde3ef;">
+  <h3 style="color:#1a3e72;margin-bottom:12px;">📖 Abbreviation Glossary</h3>
+  <table style="border-collapse:collapse;font-size:12px;">
+    ${glossaryRows}
+  </table>
+</div>
+
 <div style="padding:20px 40px;background:#f8f9fc;border-top:1px solid #dde3ef;font-size:11px;color:#6b7a9a;text-align:center;">
-  Generated by Log360 Health Check Tool &bull; ManageEngine Log360 &bull; ${new Date().toLocaleDateString()}
+  Generated by HCT — Health Check Tool &bull; ManageEngine &bull; ${new Date().toLocaleDateString()}
 </div>
 </body>
 </html>`;
 
     this._downloadFile(
       html,
-      `Log360-HealthCheck-${assessmentData.customer_name}-${assessmentData.assessment_date}.html`,
+      `HCT-${assessmentData.customer_name}-${assessmentData.assessment_date}.html`,
       'text/html'
     );
   },

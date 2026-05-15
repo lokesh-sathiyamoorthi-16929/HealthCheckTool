@@ -447,6 +447,12 @@ h3 { font-size: 1.15rem; }
 .badge-PU     { background: #d1fae5; color: #065f46; }
 .badge-PU\/HC { background: #ede9fe; color: #5b21b6; }
 .badge-HC\/PU { background: #ede9fe; color: #5b21b6; }
+.badge-PU-HC  { background: #ede9fe; color: #5b21b6; }
+.badge-HC-PU  { background: #ede9fe; color: #5b21b6; }
+.badge-INFO   { background: #e5e7eb; color: #6b7280; }
+
+/* abbr tooltip style */
+abbr { text-decoration: underline dotted; cursor: help; }
 
 .status-select {
   padding: 5px 8px;
@@ -493,6 +499,18 @@ tr.status-not_configured{ background: rgba(220,53,69,0.04); }
 tr.status-partial      { background: rgba(232,156,40,0.06); }
 tr.status-na           { background: rgba(107,122,154,0.04); }
 tr.status-na td         { opacity: 0.65; }
+tr.status-yes          { background: rgba(45,158,89,0.04); }
+tr.status-no           { background: rgba(220,53,69,0.04); }
+tr.status-latest       { background: rgba(45,158,89,0.04); }
+tr.status-one_behind   { background: rgba(232,156,40,0.06); }
+tr.status-outdated     { background: rgba(220,53,69,0.04); }
+tr.status-all          { background: rgba(45,158,89,0.04); }
+tr.status-some         { background: rgba(232,156,40,0.06); }
+tr.status-none         { background: rgba(220,53,69,0.04); }
+tr.status-correct      { background: rgba(45,158,89,0.04); }
+tr.status-incorrect    { background: rgba(220,53,69,0.04); }
+tr.row-info            { background: rgba(107,122,154,0.04); opacity: 0.85; }
+tr.status-info td      { color: var(--text-muted); }
 
 /* ---------- Recommendations ---------- */
 .recommendations-panel {
@@ -698,8 +716,8 @@ tr.status-na td         { opacity: 0.65; }
 /* ---------- Toast Notifications ---------- */
 .toast-container {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  top: 20px;
+  right: 20px;
   z-index: 9999;
   display: flex;
   flex-direction: column;

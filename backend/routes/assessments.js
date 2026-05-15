@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   try {
     const db = getDb();
-    const { customer_name, customer_domain, assessor_name, assessment_date, component_weights } = req.body;
+    const { customer_name, customer_domain, assessor_name, assessment_date, component_weights, selected_components } = req.body;
 
     if (!customer_name) {
       return res.status(400).json({ error: 'customer_name is required' });
@@ -63,6 +63,7 @@ router.post('/', (req, res) => {
       assessor_name: assessor_name || '',
       assessment_date: assessment_date || now.split('T')[0],
       component_weights: component_weights || { adaudit: 20, dataSecurity: 20, eventlog: 20, log360: 20, log360cloud: 20 },
+      selected_components: selected_components || ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'],
       components: {},
       created_at: now,
       updated_at: now

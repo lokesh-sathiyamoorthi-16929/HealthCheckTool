@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Assessment — Log360 HC Tool</title>
+  <title>Assessment — HCT</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -12,8 +12,8 @@
   <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-logo">🛡️ Log360 HC Tool</div>
-      <div class="brand-sub">Health Check &amp; Scorecard</div>
+      <div class="brand-logo">🛡️ HCT</div>
+      <div class="brand-sub">Health Check Tool</div>
     </div>
 
     <span class="sidebar-section-label">Navigation</span>
@@ -65,6 +65,7 @@
         </div>
       </div>
       <div class="top-bar-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openConfigureComponents()">⚙️ Components</button>
         <button class="btn btn-secondary btn-sm" onclick="handleSaveNow()">💾 Save</button>
         <button class="btn btn-secondary btn-sm" onclick="openExportModal()">📤 Export</button>
         <a href="dashboard.html" class="btn btn-secondary btn-sm">◀ Back</a>
@@ -139,6 +140,40 @@
 
 <div id="toast-container" class="toast-container"></div>
 
+<!-- Configure Components Modal -->
+<div class="modal-overlay" id="configure-components-modal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <h3 class="modal-title">⚙️ Configured Components</h3>
+      <button class="modal-close" onclick="document.getElementById('configure-components-modal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-small text-muted" style="margin-bottom:12px;">Select which components apply to this customer. Unselected components will be hidden from scoring and exports.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="cc-adaudit"> 🛡️ ADAudit Plus
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="cc-dataSecurity"> 🔒 DataSecurity Plus
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="cc-eventlog"> 📋 EventLog Analyzer
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="cc-log360"> 🖥️ Log360
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="cc-log360cloud"> ☁️ Log360 Cloud
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="saveConfiguredComponents()">✅ Save</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('configure-components-modal').classList.remove('show')">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
@@ -154,6 +189,9 @@
     document.getElementById('export-modal').classList.add('show');
   }
   document.getElementById('export-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+  document.getElementById('configure-components-modal').addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('show');
   });
   document.getElementById('hamburger').addEventListener('click', () => {
@@ -193,6 +231,7 @@
   .badge-HC-PU { background:#ede9fe;color:#5b21b6; }
   .badge-PU\/HC { background:#ede9fe;color:#5b21b6; }
   .badge-HC\/PU { background:#ede9fe;color:#5b21b6; }
+  .badge-INFO { background:#e5e7eb;color:#6b7280; }
 </style>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
-  "name": "log360-healthcheck-backend",
+  "name": "hct-backend",
   "version": "1.0.0",
-  "description": "Log360 Health Check & Product Utilization Scorecard Tool - Backend",
+  "description": "HCT — Health Check Tool Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -14,6 +14,7 @@ let state = {
   customRecs:   {},   // { comp: { criteriaId: text } }
   scores:       {},   // { comp: { hcScore, puScore } }
   weights:      { adaudit: 20, dataSecurity: 20, eventlog: 20, log360: 20, log360cloud: 20 },
+  selectedComponents: null,   // set from assessment.selected_components
   activeComponent: null,
   charts: {},
   saveTimer: null,
@@ -35,12 +36,40 @@ const COMP_ICONS = {
   log360:       '🖥️',
   log360cloud:  '☁️'
 };
-const STATUS_OPTIONS = [
-  { value: 'configured',     label: '✅ Configured' },
-  { value: 'partial',        label: '⚠️ Partially Configured' },
-  { value: 'not_configured', label: '❌ Not Configured' },
-  { value: 'na',             label: '➖ Not Applicable' }
-];
+
+// Per-value display mapping — used by buildCriteriaRow and scoring
+// STATUS_DISPLAY is also defined in export.js (shared via window)
+const _STATUS_DISPLAY = {
+  configured:     { label: '✅ Configured',           weight: 1.0 },
+  partial:        { label: '⚠️ Partially Configured', weight: 0.5 },
+  not_configured: { label: '❌ Not Configured',        weight: 0.0 },
+  na:             { label: '➖ Not Applicable',        weight: null },
+  info:           { label: 'ℹ️ Informational',        weight: null },
+  yes:            { label: '✅ Yes',                   weight: 1.0 },
+  no:             { label: '❌ No',                    weight: 0.0 },
+  latest:         { label: '✅ Latest',                weight: 1.0 },
+  one_behind:     { label: '⚠️ 1 Build Behind',       weight: 0.5 },
+  outdated:       { label: '❌ Outdated',              weight: 0.0 },
+  all:            { label: '✅ All',                   weight: 1.0 },
+  some:           { label: '⚠️ Some',                 weight: 0.5 },
+  none:           { label: '❌ None',                  weight: 0.0 },
+  correct:        { label: '✅ Correct',               weight: 1.0 },
+  incorrect:      { label: '❌ Incorrect',             weight: 0.0 },
+};
+
+const ABBR_MAP = {
+  'HC':    'Health Check',
+  'PU':    'Product Utilization',
+  'PU/HC': 'Product Utilization & Health Check',
+  'HC/PU': 'Health Check & Product Utilization',
+  'INFO':  'Informational (not scored)',
+};
+
+// Reference scoring weight map (STATUS_WEIGHT is defined in scoring.js, loaded before app.js)
+// Used by updateSectionProgress; falls back gracefully
+function _getWeight(status) {
+  return (window.STATUS_WEIGHT || {})[status] ?? (status === 'na' || status === 'info' ? null : 0);
+}
 
 // ============================================================
 // Bootstrap
@@ -60,7 +89,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadAssessment(id);
     await loadAllTemplates();
     buildUI();
-    switchComponent('adaudit');
+    const firstComp = (state.selectedComponents || COMPONENTS)[0];
+    switchComponent(firstComp);
     showToast('Assessment loaded', 'success');
   } catch (err) {
     showToast('Failed to load assessment: ' + err.message, 'error');
@@ -75,13 +105,16 @@ async function loadAssessment(id) {
   state.assessment = await Api.getAssessment(id);
   state.weights = state.assessment.component_weights || state.weights;
 
+  // Determine which components are active for this assessment
+  state.selectedComponents = state.assessment.selected_components || COMPONENTS.slice();
+
   // Load existing component data into state
   const components = state.assessment.components || {};
   COMPONENTS.forEach(comp => {
     const data = components[comp] || {};
     state.statuses[comp]   = data.criteria_statuses || {};
     state.notes[comp]      = data.criteria_notes    || {};
-    state.customRecs[comp] = {};  // will be populated from custom_recommendations
+    state.customRecs[comp] = {};
     (data.custom_recommendations || []).forEach(r => {
       state.customRecs[comp][r.criteriaId] = r.text;
     });
@@ -104,6 +137,7 @@ async function loadAllTemplates() {
 // ============================================================
 function buildUI() {
   const a = state.assessment;
+  const activeComps = state.selectedComponents || COMPONENTS;
 
   // Header
   document.getElementById('customer-name').textContent = a.customer_name;
@@ -111,9 +145,9 @@ function buildUI() {
   document.getElementById('assessment-date').textContent = a.assessment_date;
   document.getElementById('assessor-name').textContent   = a.assessor_name || '—';
 
-  // Build component tabs
+  // Build component tabs (only selected components)
   const tabBar = document.getElementById('component-tabs');
-  tabBar.innerHTML = COMPONENTS.map(comp => `
+  tabBar.innerHTML = activeComps.map(comp => `
     <button class="component-tab" data-comp="${comp}" id="tab-${comp}">
       <span>${COMP_ICONS[comp]}</span>
       <span>${COMP_NAMES[comp]}</span>
@@ -265,26 +299,57 @@ function buildSection(comp, section, sectionId) {
 }
 
 function buildCriteriaRow(comp, crit) {
-  const status = (state.statuses[comp] || {})[crit.id] || 'not_configured';
-  const note   = (state.notes[comp]    || {})[crit.id] || '';
+  const statusOpts = crit.statusOptions || ['configured', 'partial', 'not_configured', 'na'];
+  const isInfo = crit.type === 'INFO';
 
-  const optionsHtml = STATUS_OPTIONS.map(o =>
-    `<option value="${o.value}" ${o.value === status ? 'selected' : ''}>${o.label}</option>`
-  ).join('');
+  // Determine current status: saved value or sensible default from statusOptions
+  let status = (state.statuses[comp] || {})[crit.id];
+  if (!status) {
+    if (isInfo) {
+      status = 'info';
+    } else if (statusOpts.includes('not_configured')) {
+      status = 'not_configured';
+    } else if (statusOpts.includes('no')) {
+      status = 'no';
+    } else if (statusOpts.includes('outdated')) {
+      status = 'outdated';
+    } else if (statusOpts.includes('none')) {
+      status = 'none';
+    } else if (statusOpts.includes('incorrect')) {
+      status = 'incorrect';
+    } else {
+      status = statusOpts[statusOpts.length - 1] || 'not_configured';
+    }
+  }
 
-  const badgeClass = 'badge-' + crit.type.replace('/', '\\/');
+  const note = (state.notes[comp] || {})[crit.id] || '';
+
+  // Build dropdown — INFO items get locked single option
+  let optionsHtml;
+  if (isInfo) {
+    optionsHtml = `<option value="info" selected>ℹ️ Informational</option>`;
+  } else {
+    optionsHtml = statusOpts.map(v => {
+      const info = _STATUS_DISPLAY[v] || { label: v };
+      return `<option value="${v}" ${v === status ? 'selected' : ''}>${info.label}</option>`;
+    }).join('');
+  }
+
+  const badgeCls = isInfo ? 'badge-INFO' : `badge-${crit.type.replace(/\//g, '-')}`;
+  const abbrTitle = ABBR_MAP[crit.type] || crit.type;
+  const typeDisplay = `<abbr title="${escHtml(abbrTitle)}">${escHtml(crit.type)}</abbr>`;
 
   return `
-    <tr class="status-${status}" id="row-${crit.id}">
-      <td><span class="criteria-type-badge badge-${crit.type.replace(/\//g, '-')}">${crit.type}</span></td>
+    <tr class="status-${status}${isInfo ? ' row-info' : ''}" id="row-${crit.id}">
+      <td><span class="criteria-type-badge ${badgeCls}">${typeDisplay}</span></td>
       <td class="criteria-text">${escHtml(crit.text)}</td>
       <td>
-        <select class="status-select" data-crit-id="${crit.id}">
+        <select class="status-select" data-crit-id="${crit.id}"${isInfo ? ' disabled' : ''}>
           ${optionsHtml}
         </select>
       </td>
       <td>
-        <textarea class="notes-input" data-crit-id="${crit.id}" rows="1" placeholder="Notes…">${escHtml(note)}</textarea>
+        <textarea class="notes-input" data-crit-id="${crit.id}" rows="1" placeholder="Notes…"${isInfo ? ' disabled' : ''}>${escHtml(note)}</textarea>
       </td>
       <td>
         ${crit.helpLink
@@ -407,18 +472,18 @@ function updateSectionProgress(comp) {
     const progEl = document.getElementById(`prog-${sectionId}`);
     if (!progEl) return;
 
-    let configured = 0, total = 0;
+    let score = 0, total = 0;
     section.criteria.forEach(crit => {
-      const st = (state.statuses[comp] || {})[crit.id] || 'not_configured';
-      if (st !== 'na') {
-        total++;
-        if (st === 'configured') configured++;
-        else if (st === 'partial') configured += 0.5;
-      }
+      if (crit.type === 'INFO') return; // exclude INFO from progress
+      const st = (state.statuses[comp] || {})[crit.id];
+      const weight = _getWeight(st);
+      if (weight === null || weight === undefined) return; // na
+      total++;
+      score += weight;
     });
 
-    const pct = total > 0 ? Math.round((configured / total) * 100) : 0;
-    progEl.textContent = `${pct}% (${Math.round(configured)}/${total})`;
+    const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+    progEl.textContent = `${pct}% (${Math.round(score)}/${total})`;
   });
 }
 
@@ -498,7 +563,12 @@ function renderComponentChart(comp) {
 }
 
 function updateOverallScores() {
-  const { overallHC, overallPU } = Scoring.computeOverallScore(state.scores, state.weights);
+  // Only score selected components
+  const activeComps = state.selectedComponents || COMPONENTS;
+  const activeScores = {};
+  activeComps.forEach(c => { if (state.scores[c]) activeScores[c] = state.scores[c]; });
+
+  const { overallHC, overallPU } = Scoring.computeOverallScore(activeScores, state.weights);
 
   const ohcEl = document.getElementById('overall-hc');
   const opuEl = document.getElementById('overall-pu');
@@ -517,7 +587,7 @@ function updateOverallScores() {
   if (opuBar) opuBar.style.width = overallPU + '%';
 
   // Update per-component rows in header if present
-  COMPONENTS.forEach(comp => {
+  (state.selectedComponents || COMPONENTS).forEach(comp => {
     const s = state.scores[comp] || { hcScore: 0, puScore: 0 };
     const miniHc = document.getElementById(`mini-hc-${comp}`);
     const miniPu = document.getElementById(`mini-pu-${comp}`);
@@ -558,18 +628,27 @@ function renderOverallChart(hc, pu) {
 }
 
 // ============================================================
-// Accordion
+// Accordion (auto-collapse siblings within same component)
 // ============================================================
 function toggleSection(hdr, forceOpen = false) {
   const body = hdr.nextElementSibling;
   const isOpen = body.classList.contains('open');
 
-  if (forceOpen) {
+  if (forceOpen || !isOpen) {
+    // Close ALL other open sections in the same component panel first
+    const container = document.getElementById('component-panel');
+    container.querySelectorAll('.section-header.open').forEach(otherHdr => {
+      if (otherHdr !== hdr) {
+        otherHdr.classList.remove('open');
+        otherHdr.nextElementSibling.classList.remove('open');
+      }
+    });
+    // Open this one
     hdr.classList.add('open');
     body.classList.add('open');
   } else {
-    hdr.classList.toggle('open', !isOpen);
-    body.classList.toggle('open', !isOpen);
+    hdr.classList.remove('open');
+    body.classList.remove('open');
   }
 }
 
@@ -586,6 +665,7 @@ async function saveAssessment() {
   if (!state.dirty) return;
   state.dirty = false;
 
+  const indicator = document.getElementById('save-status');
   try {
     const components = {};
     COMPONENTS.forEach(comp => {
@@ -601,19 +681,17 @@ async function saveAssessment() {
       };
     });
 
-    await Api.updateAssessment(state.assessmentId, { components });
-    updateSaveIndicator('saved');
+    await Api.updateAssessment(state.assessmentId, {
+      components,
+      selected_components: state.selectedComponents || COMPONENTS
+    });
+    showToast('✅ Saved', 'success');
+    if (indicator) { indicator.textContent = 'Saved ✅'; indicator.className = 'save-indicator saved'; setTimeout(() => { indicator.textContent = 'Auto-save on'; indicator.className = 'save-indicator'; }, 2500); }
   } catch (err) {
-    updateSaveIndicator('error');
+    if (indicator) { indicator.textContent = '⚠ Save failed'; indicator.className = 'save-indicator error'; }
+    showToast('Save failed: ' + err.message, 'error');
     console.error('Auto-save failed:', err);
   }
-}
-
-function updateSaveIndicator(status) {
-  const el = document.getElementById('save-status');
-  if (!el) return;
-  el.className = `save-indicator ${status}`;
-  el.textContent = status === 'saved' ? '✓ Saved' : status === 'error' ? '⚠ Save failed' : 'Saving…';
 }
 
 // ============================================================
@@ -621,13 +699,14 @@ function updateSaveIndicator(status) {
 // ============================================================
 window.handleExportCSV = function() {
   if (!state.assessment) return;
-  ExportUtils.exportCSV(state.assessment, state.templates);
+  const selectedComps = state.selectedComponents || COMPONENTS;
+  ExportUtils.exportCSV(state.assessment, state.templates, state.scores, selectedComps);
   showToast('CSV exported!', 'success');
 };
 
 window.handleExportHTML = function() {
   if (!state.assessment) return;
-  // Build full assessment data with current scores
+  const selectedComps = state.selectedComponents || COMPONENTS;
   const assessmentData = {
     ...state.assessment,
     components: {}
@@ -638,14 +717,14 @@ window.handleExportHTML = function() {
       criteria_notes:    state.notes[comp]    || {}
     };
   });
-  ExportUtils.exportHTML(assessmentData, state.templates, state.scores);
+  ExportUtils.exportHTML(assessmentData, state.templates, state.scores, selectedComps);
   showToast('HTML report exported!', 'success');
 };
 
 window.handleExportPDF = async function() {
   const el = document.getElementById('component-panel');
   if (!el) return;
-  const fn = `Log360-HealthCheck-${state.assessment?.customer_name || 'Report'}.pdf`;
+  const fn = `HCT-${state.assessment?.customer_name || 'Report'}.pdf`;
   await ExportUtils.exportPDF(el, fn);
 };
 
@@ -681,6 +760,41 @@ function createToastContainer() {
 }
 
 window.showToast = showToast;
+
+// ============================================================
+// Configure Components Modal
+// ============================================================
+window.openConfigureComponents = function() {
+  const modal = document.getElementById('configure-components-modal');
+  if (!modal) return;
+  // Pre-check boxes based on current selected components
+  const sel = state.selectedComponents || COMPONENTS;
+  COMPONENTS.forEach(comp => {
+    const cb = document.getElementById(`cfg-comp-${comp}`);
+    if (cb) cb.checked = sel.includes(comp);
+  });
+  modal.classList.add('show');
+};
+
+window.saveConfiguredComponents = function() {
+  const selected = COMPONENTS.filter(comp => {
+    const cb = document.getElementById(`cfg-comp-${comp}`);
+    return cb && cb.checked;
+  });
+  if (selected.length === 0) {
+    alert('At least one component must be selected.');
+    return;
+  }
+  state.selectedComponents = selected;
+  state.assessment.selected_components = selected;
+  // Rebuild UI with new component set
+  buildUI();
+  const firstComp = selected[0];
+  switchComponent(firstComp);
+  scheduleSave();
+  document.getElementById('configure-components-modal').classList.remove('show');
+  showToast('Components updated', 'success');
+};
 
 // Hamburger menu
 const hamburger = document.getElementById('hamburger');
