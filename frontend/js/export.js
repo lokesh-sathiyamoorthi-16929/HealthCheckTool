@@ -22,7 +22,10 @@ const ExportUtils = {
 
     COMPONENTS.forEach(comp => {
       const template = criteriaByComponent[comp];
-      if (!template) return;
+      if (!template) {
+        console.warn(`[exportCSV] No criteria template found for component: ${comp}`);
+        return;
+      }
       const compData = (assessmentData.components || {})[comp] || {};
       const statuses = compData.criteria_statuses || {};
       const notes    = compData.criteria_notes    || {};
@@ -96,7 +99,10 @@ const ExportUtils = {
 
     COMPONENTS.forEach(comp => {
       const template = criteriaByComponent[comp];
-      if (!template) return;
+      if (!template) {
+        console.warn(`[exportHTML] No criteria template found for component: ${comp}`);
+        return;
+      }
       const scores = componentScores[comp] || { hcScore: 0, puScore: 0 };
       const compData = (assessmentData.components || {})[comp] || {};
       const statuses = compData.criteria_statuses || {};

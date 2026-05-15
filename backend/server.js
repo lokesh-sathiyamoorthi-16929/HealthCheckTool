@@ -1,12 +1,22 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 
 const assessmentsRouter = require('./routes/assessments');
 const criteriaRouter = require('./routes/criteria');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Rate limiting — protects API and file-system routes from abuse
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300,                  // max 300 requests per window per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later.' }
+});
 
 // Middleware
 app.use(cors());
@@ -16,9 +26,9 @@ app.use(express.urlencoded({ extended: true }));
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// API Routes
-app.use('/api/assessments', assessmentsRouter);
-app.use('/api/criteria', criteriaRouter);
+// API Routes — rate limited
+app.use('/api/assessments', apiLimiter, assessmentsRouter);
+app.use('/api/criteria', apiLimiter, criteriaRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

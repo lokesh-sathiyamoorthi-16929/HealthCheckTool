@@ -94,9 +94,9 @@ const Scoring = {
 
   /** Return pill class for dashboard table */
   pillClass(score) {
+    if (score === undefined || score === null) return 'na';
     if (score >= 75) return 'good';
     if (score >= 45) return 'medium';
-    if (score === 0 && score !== undefined) return 'na';
     return 'low';
   }
 };
