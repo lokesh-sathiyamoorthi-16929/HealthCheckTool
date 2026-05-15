@@ -1,4 +1,4 @@
-# Log360 Health Check & Product Utilization Scorecard Tool
+# HCT — Health Check & Product Utilization Scorecard Tool
 
 A professional web application for ManageEngine consultants and customer success engineers to assess customer deployments of **Log360** and its components, generate scored health checks, create editable recommendations, and export shareable reports.
 

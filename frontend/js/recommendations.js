@@ -18,11 +18,17 @@ const Recommendations = {
 
     sections.forEach(section => {
       section.criteria.forEach(crit => {
+        if (crit.type === 'INFO') return;
+
         const status = statuses[crit.id] || 'not_configured';
 
-        if (status === 'configured' || status === 'na') return;
+        // Statuses that mean "fully done" - no recommendation needed
+        const doneStatuses = new Set(['configured', 'yes', 'latest', 'all', 'correct', 'na', 'info']);
+        if (doneStatuses.has(status)) return;
 
-        const severity = status === 'not_configured' ? 'high' : 'medium';
+        // Partial statuses → medium severity; otherwise → high
+        const partialStatuses = new Set(['partial', 'one_behind', 'some']);
+        const severity = partialStatuses.has(status) ? 'medium' : 'high';
 
         recs.push({
           criteriaId: crit.id,

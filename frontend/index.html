@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Log360 Health Check Tool</title>
+  <title>HCT — Health Check Tool</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -12,8 +12,8 @@
   <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-logo">🛡️ Log360 HC Tool</div>
-      <div class="brand-sub">Health Check &amp; Scorecard</div>
+      <div class="brand-logo">🛡️ HCT</div>
+      <div class="brand-sub">Health Check Tool</div>
     </div>
 
     <span class="sidebar-section-label">Navigation</span>
@@ -32,7 +32,7 @@
     </ul>
 
     <div class="sidebar-bottom">
-      ManageEngine Log360<br>Health Check Tool v1.0
+      ManageEngine HCT<br>Health Check Tool v2.0
     </div>
   </nav>
 
@@ -40,7 +40,7 @@
   <div class="main-content">
     <header class="top-bar">
       <button class="hamburger" id="hamburger">☰</button>
-      <div class="top-bar-title">🛡️ Log360 Health Check &amp; Scorecard Tool</div>
+      <div class="top-bar-title">🛡️ HCT — Health Check &amp; Scorecard Tool</div>
       <div class="top-bar-actions">
         <a href="dashboard.html" class="btn btn-secondary btn-sm">📊 Dashboard</a>
       </div>
@@ -51,7 +51,7 @@
       <!-- Hero Section -->
       <div style="background:linear-gradient(135deg,#1a3e72,#2a5298);color:#fff;border-radius:12px;padding:40px 36px;margin-bottom:28px;">
         <div style="max-width:680px;">
-          <h1 style="color:#fff;font-size:2rem;margin-bottom:12px;">Log360 Health Check &amp; Product Utilization Scorecard</h1>
+          <h1 style="color:#fff;font-size:2rem;margin-bottom:12px;">HCT — Health Check &amp; Product Utilization Scorecard</h1>
           <p style="font-size:1rem;opacity:0.9;line-height:1.7;margin-bottom:24px;">
             A comprehensive assessment tool for ManageEngine consultants and customer success engineers.
             Evaluate your customer's Log360 deployment, generate actionable recommendations, and export professional reports.
@@ -206,6 +206,26 @@
             <input type="date" id="na-date" class="form-control">
           </div>
         </div>
+        <div class="form-group">
+          <label>Which components is this customer using?</label>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="nc-adaudit" checked> 🛡️ ADAudit Plus
+            </label>
+            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="nc-dataSecurity" checked> 🔒 DataSecurity Plus
+            </label>
+            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="nc-eventlog" checked> 📋 EventLog Analyzer
+            </label>
+            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="nc-log360" checked> 🖥️ Log360
+            </label>
+            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="nc-log360cloud" checked> ☁️ Log360 Cloud
+            </label>
+          </div>
+        </div>
         <p class="text-small text-muted">* Required fields. All data is saved automatically as you work.</p>
       </form>
     </div>
@@ -240,23 +260,30 @@
       alert('Customer name is required.');
       return;
     }
-    const btn = document.getElementById('create-assessment-btn');
-    btn.disabled = true;
-    btn.textContent = 'Creating…';
+      const allComps = ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'];
+      const selectedComponents = allComps.filter(c => document.getElementById(`nc-${c}`)?.checked);
+      if (selectedComponents.length === 0) {
+        alert('Please select at least one component.');
+        return;
+      }
+      const btn = document.getElementById('create-assessment-btn');
+      btn.disabled = true;
+      btn.textContent = 'Creating…';
 
-    try {
-      const result = await Api.createAssessment({
-        customer_name:  name,
-        customer_domain: document.getElementById('na-domain').value.trim(),
-        assessor_name:  document.getElementById('na-assessor').value.trim(),
-        assessment_date: document.getElementById('na-date').value
-      });
-      window.location.href = `assessment.html?id=${result.id}`;
-    } catch (err) {
-      alert('Failed to create assessment: ' + err.message);
-      btn.disabled = false;
-      btn.textContent = '✅ Create Assessment';
-    }
+      try {
+        const result = await Api.createAssessment({
+          customer_name:  name,
+          customer_domain: document.getElementById('na-domain').value.trim(),
+          assessor_name:  document.getElementById('na-assessor').value.trim(),
+          assessment_date: document.getElementById('na-date').value,
+          selected_components: selectedComponents
+        });
+        window.location.href = `assessment.html?id=${result.id}`;
+      } catch (err) {
+        alert('Failed to create assessment: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = '✅ Create Assessment';
+      }
   });
 </script>
 </body>
