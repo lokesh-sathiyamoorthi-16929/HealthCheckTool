@@ -248,7 +248,7 @@ function renderTable(assessments) {
 }
 
 function pillClass(score) {
-  if (!score && score !== 0) return 'na';
+  if (score === null || score === undefined) return 'na';
   if (score >= 75) return 'good';
   if (score >= 45) return 'medium';
   return 'low';

@@ -23,6 +23,14 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Static files rate limiter (generous — for normal browser usage)
+const staticLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000,                 // generous limit for static file serving
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../frontend')));
 
@@ -36,7 +44,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Fallback: serve index.html for all non-API routes
-app.get('*', (req, res) => {
+app.get('*', staticLimiter, (req, res) => {
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
   } else {

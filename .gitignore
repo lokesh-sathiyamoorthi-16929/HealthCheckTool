@@ -3,6 +3,7 @@ backend/node_modules/
 *.db
 *.sqlite
 *.sqlite3
+backend/healthcheck.json
 .env
 .DS_Store
 dist/
