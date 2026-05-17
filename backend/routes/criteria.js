@@ -10,10 +10,31 @@ const COMPONENT_FILES = {
   dataSecurity: 'criteria-dataSecurity.json',
   eventlog: 'criteria-eventlog.json',
   log360: 'criteria-log360.json',
-  log360cloud: 'criteria-log360cloud.json'
+  log360cloud: 'criteria-log360cloud.json',
+  ad360: 'criteria-ad360.json',
+  admanager: 'criteria-admanager.json',
+  adselfservice: 'criteria-adselfservice.json',
+  m365manager: 'criteria-m365manager.json',
+  recoverymanager: 'criteria-recoverymanager.json',
+  exchangereporter: 'criteria-exchangereporter.json',
+  sharepointmanager: 'criteria-sharepointmanager.json'
 };
 
-// GET /api/criteria/:component
+const descriptions = {
+  adaudit: 'ADAudit Plus',
+  dataSecurity: 'DataSecurity Plus',
+  eventlog: 'EventLog Analyzer',
+  log360: 'Log360',
+  log360cloud: 'Log360 Cloud (placeholder criteria)',
+  ad360: 'AD360',
+  admanager: 'ADManager Plus',
+  adselfservice: 'ADSelfService Plus',
+  m365manager: 'M365 Manager Plus',
+  recoverymanager: 'RecoveryManager Plus',
+  exchangereporter: 'Exchange Reporter Plus',
+  sharepointmanager: 'SharePoint Manager Plus (placeholder criteria)'
+};
+
 router.get('/:component', (req, res) => {
   const { component } = req.params;
   const filename = COMPONENT_FILES[component];
@@ -24,27 +45,18 @@ router.get('/:component', (req, res) => {
     });
   }
 
-  const filePath = path.join(DATA_DIR, filename);
-
   try {
-    const data = fs.readFileSync(filePath, 'utf8');
+    const data = fs.readFileSync(path.join(DATA_DIR, filename), 'utf8');
     res.json(JSON.parse(data));
   } catch (err) {
     res.status(500).json({ error: `Failed to load criteria for ${component}: ${err.message}` });
   }
 });
 
-// GET /api/criteria — list all available components
 router.get('/', (req, res) => {
   res.json({
     components: Object.keys(COMPONENT_FILES),
-    descriptions: {
-      adaudit: 'ADAudit Plus - Active Directory Auditing',
-      dataSecurity: 'DataSecurity Plus - Data Loss Prevention & File Security',
-      eventlog: 'EventLog Analyzer - Log Management & SIEM (Build 13000 series)',
-      log360: 'Log360 - Unified SIEM with UEBA (Build 13000 series)',
-      log360cloud: 'Log360 Cloud - Cloud-native SIEM'
-    }
+    descriptions
   });
 });
 

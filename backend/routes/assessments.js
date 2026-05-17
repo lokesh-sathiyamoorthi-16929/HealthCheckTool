@@ -3,7 +3,26 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { getDb } = require('../db');
 
-// GET /api/assessments — list all assessments
+const DEFAULT_COMPONENTS = [
+  'adaudit',
+  'dataSecurity',
+  'eventlog',
+  'log360',
+  'ad360',
+  'admanager',
+  'adselfservice',
+  'm365manager',
+  'recoverymanager',
+  'exchangereporter',
+  'sharepointmanager',
+  'log360cloud'
+];
+
+const DEFAULT_WEIGHTS = DEFAULT_COMPONENTS.reduce((acc, key) => {
+  acc[key] = 20;
+  return acc;
+}, {});
+
 router.get('/', (req, res) => {
   try {
     const db = getDb();
@@ -13,14 +32,13 @@ router.get('/', (req, res) => {
       .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
       .map(a => {
         const components = a.components || {};
-        const weights = a.component_weights || {};
+        const weights = a.component_weights || DEFAULT_WEIGHTS;
 
-        let totalWeight = 0, weightedHc = 0, weightedPu = 0;
+        let totalWeight = 0, weightedOverall = 0;
         for (const [comp, data] of Object.entries(components)) {
           const w = weights[comp] || 20;
           totalWeight += w;
-          weightedHc += (data.hc_score || 0) * w;
-          weightedPu += (data.pu_score || 0) * w;
+          weightedOverall += (data.overall_score || 0) * w;
         }
 
         return {
@@ -31,8 +49,7 @@ router.get('/', (req, res) => {
           assessment_date: a.assessment_date,
           created_at: a.created_at,
           updated_at: a.updated_at,
-          overall_hc_score: totalWeight > 0 ? Math.round(weightedHc / totalWeight) : 0,
-          overall_pu_score: totalWeight > 0 ? Math.round(weightedPu / totalWeight) : 0,
+          overall_score: totalWeight > 0 ? Math.round(weightedOverall / totalWeight) : 0,
           component_count: Object.keys(components).length
         };
       });
@@ -43,7 +60,6 @@ router.get('/', (req, res) => {
   }
 });
 
-// POST /api/assessments — create new assessment
 router.post('/', (req, res) => {
   try {
     const db = getDb();
@@ -62,8 +78,8 @@ router.post('/', (req, res) => {
       customer_domain: customer_domain || '',
       assessor_name: assessor_name || '',
       assessment_date: assessment_date || now.split('T')[0],
-      component_weights: component_weights || { adaudit: 20, dataSecurity: 20, eventlog: 20, log360: 20, log360cloud: 20 },
-      selected_components: selected_components || ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'],
+      component_weights: component_weights || DEFAULT_WEIGHTS,
+      selected_components: selected_components || DEFAULT_COMPONENTS,
       components: {},
       created_at: now,
       updated_at: now
@@ -77,7 +93,6 @@ router.post('/', (req, res) => {
   }
 });
 
-// GET /api/assessments/:id — get single assessment
 router.get('/:id', (req, res) => {
   try {
     const db = getDb();
@@ -93,7 +108,6 @@ router.get('/:id', (req, res) => {
   }
 });
 
-// PUT /api/assessments/:id — update assessment
 router.put('/:id', (req, res) => {
   try {
     const db = getDb();
@@ -106,7 +120,6 @@ router.put('/:id', (req, res) => {
     const now = new Date().toISOString();
     const updates = { ...req.body, updated_at: now };
 
-    // Merge components rather than replace if only partial update
     if (req.body.components && existing.components) {
       updates.components = { ...existing.components, ...req.body.components };
     }
@@ -122,7 +135,6 @@ router.put('/:id', (req, res) => {
   }
 });
 
-// DELETE /api/assessments/:id — delete assessment
 router.delete('/:id', (req, res) => {
   try {
     const db = getDb();

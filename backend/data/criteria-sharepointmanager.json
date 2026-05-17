@@ -1,20 +1,20 @@
 {
-  "component": "log360cloud",
-  "name": "Log360 Cloud",
+  "component": "sharepointmanager",
+  "name": "SharePoint Manager Plus",
   "buildInfo": {
     "latestBuild": "",
     "releaseNotesUrl": "",
     "documentationUrl": ""
   },
   "pending_user_verification": true,
-  "banner": "Log360 Cloud criteria pending official source from user.",
+  "banner": "SharePoint Manager Plus criteria are placeholders pending user input. Please contact the project owner to provide the official checklist.",
   "sections": [
     {
       "id": "services",
       "name": "Services",
       "criteria": [
         {
-          "id": "l360c_services_001",
+          "id": "spmp_services_001",
           "text": "Product installed as a service",
           "type": "HC",
           "helpLink": "",
@@ -27,7 +27,7 @@
           }
         },
         {
-          "id": "l360c_services_002",
+          "id": "spmp_services_002",
           "text": "Product is upgraded to the latest build",
           "type": "HC",
           "helpLink": "",
@@ -46,7 +46,7 @@
       "name": "Licensing",
       "criteria": [
         {
-          "id": "l360c_licensing_001",
+          "id": "spmp_licensing_001",
           "text": "Licensing is valid and active",
           "type": "PU",
           "helpLink": "",
@@ -65,7 +65,7 @@
       "name": "Antivirus",
       "criteria": [
         {
-          "id": "l360c_antivirus_001",
+          "id": "spmp_antivirus_001",
           "text": "Endpoint antivirus exclusions are reviewed",
           "type": "HC",
           "helpLink": "",
@@ -84,7 +84,7 @@
       "name": "Firewall",
       "criteria": [
         {
-          "id": "l360c_firewall_001",
+          "id": "spmp_firewall_001",
           "text": "Required firewall ports are allowed",
           "type": "HC",
           "helpLink": "",
@@ -103,7 +103,7 @@
       "name": "Hardware",
       "criteria": [
         {
-          "id": "l360c_hardware_001",
+          "id": "spmp_hardware_001",
           "text": "Platform resources are sized appropriately",
           "type": "HC",
           "helpLink": "",
@@ -122,7 +122,7 @@
       "name": "Reports",
       "criteria": [
         {
-          "id": "l360c_reports_001",
+          "id": "spmp_reports_001",
           "text": "At least one scheduled report is configured",
           "type": "PU",
           "helpLink": "",
@@ -141,7 +141,7 @@
       "name": "Admin",
       "criteria": [
         {
-          "id": "l360c_admin_001",
+          "id": "spmp_admin_001",
           "text": "Administrative accounts follow least privilege",
           "type": "HC",
           "helpLink": "",
@@ -160,7 +160,7 @@
       "name": "Security Hardening",
       "criteria": [
         {
-          "id": "l360c_hardening_001",
+          "id": "spmp_hardening_001",
           "text": "Security hardening baseline is applied",
           "type": "HC",
           "helpLink": "",

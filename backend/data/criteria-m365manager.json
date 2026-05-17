@@ -1,0 +1,7 @@
+{
+  "component": "m365manager",
+  "name": "M365 Manager Plus",
+  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
+  "criteria_source": "AD360 Health Check Criteria.txt",
+  "sections": []
+}
