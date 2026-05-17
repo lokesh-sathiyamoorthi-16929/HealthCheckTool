@@ -1,7 +1,135 @@
 {
   "component": "exchangereporter",
   "name": "Exchange Reporter Plus",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
-  "criteria_source": "AD360 Health Check Criteria.txt",
-  "sections": []
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
+  "pending_user_verification": true,
+  "banner": "Exchange Reporter Plus criteria are pending official source verification. Please provide the official Health Check Criteria txt file.",
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "erp_svc_001",
+          "text": "Exchange Reporter Plus service is running under a dedicated service account",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Exchange Reporter Plus service is running under a dedicated service account",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 2
+          }
+        },
+        {
+          "id": "erp_svc_002",
+          "text": "Exchange Reporter Plus is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Exchange Reporter Plus is on the latest available build",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Vulnerabilities",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "reporting",
+      "name": "Exchange Reporting",
+      "criteria": [
+        {
+          "id": "erp_rpt_001",
+          "text": "Mailbox size and growth reports are scheduled",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Mailbox size and growth reports are scheduled",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 8.2",
+            "name": "Collect Audit Logs",
+            "weight": 1
+          }
+        },
+        {
+          "id": "erp_rpt_002",
+          "text": "Mail traffic and spam reports are configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Mail traffic and spam reports are configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 9.4",
+            "name": "Protect Email",
+            "weight": 1
+          }
+        },
+        {
+          "id": "erp_rpt_003",
+          "text": "Permissions and delegation reports are reviewed regularly",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Permissions and delegation reports are reviewed regularly",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 2
+          }
+        },
+        {
+          "id": "erp_rpt_004",
+          "text": "Distribution group membership reports are scheduled",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Distribution group membership reports are scheduled",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.3",
+            "name": "Disable Dormant Accounts",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "erp_adm_001",
+          "text": "HTTPS/TLS is enforced for the web console",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: HTTPS/TLS is enforced for the web console",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.10",
+            "name": "Encrypt Data in Transit",
+            "weight": 2
+          }
+        },
+        {
+          "id": "erp_adm_002",
+          "text": "Role-based access control is configured",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Role-based access control is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 1
+          }
+        }
+      ]
+    }
+  ]
 }

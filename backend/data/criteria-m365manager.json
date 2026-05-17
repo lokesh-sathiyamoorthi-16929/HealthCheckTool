@@ -1,7 +1,167 @@
 {
   "component": "m365manager",
   "name": "M365 Manager Plus",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
-  "criteria_source": "AD360 Health Check Criteria.txt",
-  "sections": []
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
+  "pending_user_verification": true,
+  "banner": "M365 Manager Plus criteria are pending official source verification. Please provide the official Health Check Criteria txt file.",
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "m365mp_svc_001",
+          "text": "M365 Manager Plus service is running under a dedicated service account",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: M365 Manager Plus service is running under a dedicated service account",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 2
+          }
+        },
+        {
+          "id": "m365mp_svc_002",
+          "text": "M365 Manager Plus is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: M365 Manager Plus is on the latest available build",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Vulnerabilities",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "m365_management",
+      "name": "M365 Management",
+      "criteria": [
+        {
+          "id": "m365mp_mgmt_001",
+          "text": "Exchange Online management tasks are automated",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Exchange Online management tasks are automated",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 9.4",
+            "name": "Protect Email",
+            "weight": 1
+          }
+        },
+        {
+          "id": "m365mp_mgmt_002",
+          "text": "Azure AD/Entra ID user management is configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Azure AD/Entra ID user management is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.3",
+            "name": "Disable Dormant Accounts",
+            "weight": 1
+          }
+        },
+        {
+          "id": "m365mp_mgmt_003",
+          "text": "SharePoint and Teams management is configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: SharePoint and Teams management is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.3",
+            "name": "Configure Data Access",
+            "weight": 1
+          }
+        },
+        {
+          "id": "m365mp_mgmt_004",
+          "text": "License management and utilization reports are reviewed",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: License management and utilization reports are reviewed",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 2.1",
+            "name": "Maintain Inventory of Software",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "reports",
+      "name": "Reports",
+      "criteria": [
+        {
+          "id": "m365mp_rpt_001",
+          "text": "M365 audit reports are configured and scheduled",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: M365 audit reports are configured and scheduled",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 8.2",
+            "name": "Collect Audit Logs",
+            "weight": 1
+          }
+        },
+        {
+          "id": "m365mp_rpt_002",
+          "text": "Compliance reports are configured (PCI, HIPAA, GDPR)",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Compliance reports are configured (PCI, HIPAA, GDPR)",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 13.1",
+            "name": "Centralize Security Event Alerting",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "m365mp_adm_001",
+          "text": "HTTPS/TLS is enforced for the web console",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: HTTPS/TLS is enforced for the web console",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.10",
+            "name": "Encrypt Data in Transit",
+            "weight": 2
+          }
+        },
+        {
+          "id": "m365mp_adm_002",
+          "text": "Role-based access control is configured",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Role-based access control is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 2
+          }
+        }
+      ]
+    }
+  ]
 }

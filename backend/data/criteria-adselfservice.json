@@ -1,7 +1,220 @@
 {
   "component": "adselfservice",
   "name": "ADSelfService Plus",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
   "criteria_source": "AD360 Health Check Criteria.txt",
-  "sections": []
+  "pending_user_verification": true,
+  "banner": "ADSelfService Plus criteria are pending official source verification. Please provide the official AD360 Health Check Criteria txt file.",
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "adssp_svc_001",
+          "text": "ADSelfService Plus service is running under a dedicated service account",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADSelfService Plus service is running under a dedicated service account",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_svc_002",
+          "text": "ADSelfService Plus is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADSelfService Plus is on the latest available build",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Vulnerabilities",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_svc_003",
+          "text": "GINA/Mac/Linux login agents are deployed and operational",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: GINA/Mac/Linux login agents are deployed and operational",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "mfa",
+      "name": "Multi-Factor Authentication",
+      "criteria": [
+        {
+          "id": "adssp_mfa_001",
+          "text": "MFA is enforced for VPN/remote access logins",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: MFA is enforced for VPN/remote access logins",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 3
+          }
+        },
+        {
+          "id": "adssp_mfa_002",
+          "text": "MFA is enforced for Outlook Web Access (OWA)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: MFA is enforced for Outlook Web Access (OWA)",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_mfa_003",
+          "text": "Conditional access policies are configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Conditional access policies are configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_mfa_004",
+          "text": "MFA enrollment rate is tracked and targets are met",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: MFA enrollment rate is tracked and targets are met",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "selfservice",
+      "name": "Self-Service Features",
+      "criteria": [
+        {
+          "id": "adssp_ss_001",
+          "text": "Password self-reset is enabled for end users",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Password self-reset is enabled for end users",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.2",
+            "name": "Use Unique Passwords",
+            "weight": 1
+          }
+        },
+        {
+          "id": "adssp_ss_002",
+          "text": "Account unlock self-service is enabled",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Account unlock self-service is enabled",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.2",
+            "name": "Use Unique Passwords",
+            "weight": 1
+          }
+        },
+        {
+          "id": "adssp_ss_003",
+          "text": "Password policy enforcer is configured",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Password policy enforcer is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.2",
+            "name": "Use Unique Passwords",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_ss_004",
+          "text": "Password expiry notifications are configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Password expiry notifications are configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.2",
+            "name": "Use Unique Passwords",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "adssp_adm_001",
+          "text": "HTTPS/TLS is enforced for the web console",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: HTTPS/TLS is enforced for the web console",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.10",
+            "name": "Encrypt Data in Transit",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_adm_002",
+          "text": "Anti-hacking protection (account lockout) is configured",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Anti-hacking protection (account lockout) is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.2",
+            "name": "Establish Access Granting Process",
+            "weight": 2
+          }
+        },
+        {
+          "id": "adssp_adm_003",
+          "text": "Enrollment approval workflow is configured for sensitive groups",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Enrollment approval workflow is configured for sensitive groups",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 1
+          }
+        }
+      ]
+    }
+  ]
 }

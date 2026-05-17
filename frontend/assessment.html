@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Step 3 · Assessment</title>
+  <title>Assessment — HCT</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <header class="topbar"><div class="brand">HCT</div></header>
+  <header class="topbar">
+    <div class="brand">HCT</div>
+  </header>
   <main class="assessment-layout">
     <aside class="card sidebar" id="component-nav"></aside>
     <section class="main-area">
@@ -17,22 +19,26 @@
           <div class="score-big" id="overall-score">0%</div>
         </div>
         <div class="toolbar-actions">
-          <button class="btn secondary" id="manage-components">⚙️ Manage components</button>
+          <button class="btn secondary" id="manage-components">Components</button>
           <button class="btn secondary" id="save-btn">Save</button>
-          <button class="btn primary" id="export-btn">Export PDF</button>
+          <button class="btn primary" id="export-btn">Export Report</button>
         </div>
       </div>
-      <section class="card" id="banner"></section>
+      <section id="banner"></section>
       <section id="component-panel"></section>
     </section>
   </main>
   <div id="toast" class="toast"></div>
   <dialog id="component-modal">
-    <h3>Configured Components</h3>
+    <h3>Configure Components</h3>
     <div id="modal-picker" class="picker-grid"></div>
-    <div class="dialog-actions"><button id="modal-cancel" class="btn secondary">Cancel</button><button id="modal-apply" class="btn primary">Apply</button></div>
+    <div class="dialog-actions">
+      <button id="modal-cancel" class="btn secondary">Cancel</button>
+      <button id="modal-apply" class="btn primary">Apply</button>
+    </div>
   </dialog>
   <script src="js/api.js"></script>
+  <script src="js/scoring.js"></script>
   <script src="js/export.js"></script>
   <script src="js/assessment.js"></script>
 </body>

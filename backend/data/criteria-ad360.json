@@ -1,7 +1,207 @@
 {
   "component": "ad360",
   "name": "AD360",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
   "criteria_source": "AD360 Health Check Criteria.txt",
-  "sections": []
+  "pending_user_verification": true,
+  "banner": "AD360 criteria are pending official source verification. Please provide the official AD360 Health Check Criteria txt file.",
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "ad360_svc_001",
+          "text": "AD360 Windows service is running under a dedicated service account",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: AD360 Windows service is running under a dedicated service account",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 2
+          }
+        },
+        {
+          "id": "ad360_svc_002",
+          "text": "AD360 is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: AD360 is on the latest available build",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Vulnerabilities",
+            "weight": 2
+          }
+        },
+        {
+          "id": "ad360_svc_003",
+          "text": "Server hardware meets minimum requirements",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Server hardware meets minimum requirements",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 1
+          }
+        },
+        {
+          "id": "ad360_svc_004",
+          "text": "AD360 uses an external database (MSSQL/PostgreSQL) in production",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: AD360 uses an external database (MSSQL/PostgreSQL) in production",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.3",
+            "name": "Protect Data on End-User Devices",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "licensing",
+      "name": "Licensing",
+      "criteria": [
+        {
+          "id": "ad360_lic_001",
+          "text": "AD360 license is valid and covers all required domains",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: AD360 license is valid and covers all required domains",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 2.1",
+            "name": "Maintain Inventory of Software",
+            "weight": 1
+          }
+        },
+        {
+          "id": "ad360_lic_002",
+          "text": "Annual Maintenance Subscription (AMS) is active",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Annual Maintenance Subscription (AMS) is active",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 2.1",
+            "name": "Maintain Inventory of Software",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "components",
+      "name": "Component Integration",
+      "criteria": [
+        {
+          "id": "ad360_comp_001",
+          "text": "ADManager Plus integration is configured and operational",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADManager Plus integration is configured and operational",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.3",
+            "name": "Disable Dormant Accounts",
+            "weight": 1
+          }
+        },
+        {
+          "id": "ad360_comp_002",
+          "text": "ADAudit Plus integration is configured and operational",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADAudit Plus integration is configured and operational",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 8.2",
+            "name": "Collect Audit Logs",
+            "weight": 1
+          }
+        },
+        {
+          "id": "ad360_comp_003",
+          "text": "ADSelfService Plus integration is configured and operational",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADSelfService Plus integration is configured and operational",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "ad360_adm_001",
+          "text": "HTTPS/TLS is enforced for the web console",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: HTTPS/TLS is enforced for the web console",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.10",
+            "name": "Encrypt Sensitive Data in Transit",
+            "weight": 2
+          }
+        },
+        {
+          "id": "ad360_adm_002",
+          "text": "Two-factor authentication is enabled for admin accounts",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Two-factor authentication is enabled for admin accounts",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 2
+          }
+        },
+        {
+          "id": "ad360_adm_003",
+          "text": "Role-based access control is configured with least privilege",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Role-based access control is configured with least privilege",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles for Access Management",
+            "weight": 2
+          }
+        },
+        {
+          "id": "ad360_adm_004",
+          "text": "Automated database backup is configured",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Automated database backup is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.2",
+            "name": "Perform Automated Backups",
+            "weight": 1
+          }
+        }
+      ]
+    }
+  ]
 }

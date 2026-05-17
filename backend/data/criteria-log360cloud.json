@@ -6,171 +6,382 @@
     "releaseNotesUrl": "",
     "documentationUrl": ""
   },
-  "pending_user_verification": true,
-  "banner": "Log360 Cloud criteria pending official source from user.",
   "sections": [
     {
-      "id": "services",
-      "name": "Services",
+      "id": "setup",
+      "name": "Setup & Onboarding",
       "criteria": [
         {
-          "id": "l360c_services_001",
-          "text": "Product installed as a service",
+          "id": "l360c_setup_001",
+          "text": "Log360 Cloud account is provisioned with correct region and data residency configured",
           "type": "HC",
           "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Product installed as a service.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 4.1",
-            "name": "Establish and Maintain a Secure Configuration Process",
-            "weight": 2
-          }
+          "recommendation": "Verify Log360 Cloud account/instance is provisioned in the correct geographic region matching your data residency requirements (US, EU, APAC). Data residency is a critical compliance requirement for GDPR (EU data must stay in EU), data sovereignty laws, and certain government regulations. Cannot be changed post-setup without data migration.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         },
         {
-          "id": "l360c_services_002",
-          "text": "Product is upgraded to the latest build",
+          "id": "l360c_setup_002",
+          "text": "Log360 Cloud agent is deployed on all on-premises data collection points",
           "type": "HC",
           "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Product is upgraded to the latest build.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 7.7",
-            "name": "Remediate Detected Vulnerabilities",
-            "weight": 2
-          }
+          "recommendation": "Deploy Log360 Cloud agents on all on-premises servers and network gateways that need to forward logs to the cloud SIEM. Agents ensure encrypted, reliable log transmission. Verify agent health in Cloud Console > Agents > Health Monitor. Configure auto-restart on agent failure.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_setup_003",
+          "text": "Network connectivity and firewall rules are configured for agent-to-cloud communication",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Verify outbound HTTPS (TCP 443) from all on-premises agent hosts to Log360 Cloud endpoints. Add Log360 Cloud FQDN to firewall allow-list. Test connectivity using the built-in agent connectivity test. Document all firewall rules in your network change management system.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
-      "id": "licensing",
-      "name": "Licensing",
+      "id": "log_sources",
+      "name": "Log Sources & Collection",
       "criteria": [
         {
-          "id": "l360c_licensing_001",
-          "text": "Licensing is valid and active",
+          "id": "l360c_ls_001",
+          "text": "All Windows hosts and Domain Controllers are forwarding logs to Log360 Cloud",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Ensure all Windows hosts are configured to forward security event logs to Log360 Cloud. For DCs, verify all 4xxx security events are being received. Check for collection gaps in Log Sources > Windows > Source Health. Prioritize DCs, member servers, then workstations.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ls_002",
+          "text": "Cloud platform native logs are integrated (AWS CloudTrail, Azure Activity, GCP Audit)",
           "type": "PU",
           "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Licensing is valid and active.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "",
-            "name": "Operational hygiene",
-            "weight": 1
-          }
-        }
-      ]
-    },
-    {
-      "id": "antivirus",
-      "name": "Antivirus",
-      "criteria": [
+          "recommendation": "Connect cloud platform audit logs natively: AWS CloudTrail (S3 or API), Azure Activity Log and Sign-in Log (Event Hub or API), GCP Admin Activity and Data Access logs (Pub/Sub). Log360 Cloud provides native connectors for all major cloud platforms. This is critical for hybrid cloud SOC visibility.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
         {
-          "id": "l360c_antivirus_001",
-          "text": "Endpoint antivirus exclusions are reviewed",
-          "type": "HC",
-          "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Endpoint antivirus exclusions are reviewed.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 10.1",
-            "name": "Deploy and Maintain Anti-Malware Software",
-            "weight": 2
-          }
-        }
-      ]
-    },
-    {
-      "id": "firewall",
-      "name": "Firewall",
-      "criteria": [
-        {
-          "id": "l360c_firewall_001",
-          "text": "Required firewall ports are allowed",
-          "type": "HC",
-          "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Required firewall ports are allowed.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 12.4",
-            "name": "Require Host-Based Firewall or Port-Filtering",
-            "weight": 2
-          }
-        }
-      ]
-    },
-    {
-      "id": "hardware",
-      "name": "Hardware",
-      "criteria": [
-        {
-          "id": "l360c_hardware_001",
-          "text": "Platform resources are sized appropriately",
-          "type": "HC",
-          "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Platform resources are sized appropriately.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "",
-            "name": "Operational hygiene",
-            "weight": 1
-          }
-        }
-      ]
-    },
-    {
-      "id": "reports",
-      "name": "Reports",
-      "criteria": [
-        {
-          "id": "l360c_reports_001",
-          "text": "At least one scheduled report is configured",
+          "id": "l360c_ls_003",
+          "text": "SaaS application logs are connected (M365, Google Workspace, Salesforce, Okta, etc.)",
           "type": "PU",
           "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: At least one scheduled report is configured.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 8.2",
-            "name": "Collect Audit Logs",
-            "weight": 1
-          }
+          "recommendation": "Connect SaaS audit logs: Microsoft 365 (Exchange, Teams, SharePoint, Azure AD via Management API), Google Workspace (Admin SDK), Salesforce (EventLogFile), Okta (System Log API), Box, Dropbox. SaaS logs are critical for detecting BEC (Business Email Compromise) and SaaS account takeovers.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ls_004",
+          "text": "Network device logs (firewalls, VPN, proxies) are forwarding to Log360 Cloud",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Configure on-premises network devices to forward syslog to the Log360 Cloud on-premises collector/agent, which then forwards to the cloud. Alternatively, use the Log360 Cloud syslog receiver endpoint for devices with direct internet access. Verify all critical perimeter devices are represented.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ls_005",
+          "text": "Log collection failure alerting is configured for all critical sources",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Configure log collection failure alerts (new cloud feature): receive automatic notifications when any critical log source stops sending data. This prevents silent monitoring gaps. Configure in Log Sources > Source Health > Alert Configuration. Set severity-based thresholds: Critical sources: alert after 15 min silence; Standard: 60 min.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ls_006",
+          "text": "Agent health monitoring and alerting is configured",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Enable agent health monitoring in Log360 Cloud. Configure alerts for agent offline, agent CPU/memory spikes, and forwarding queue backlogs. Unhealthy agents drop logs before forwarding to cloud. Navigate to Agents > Health Dashboard > Alert Configuration.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
-      "id": "admin",
-      "name": "Admin",
+      "id": "detection",
+      "name": "Detection & Analytics",
       "criteria": [
         {
-          "id": "l360c_admin_001",
-          "text": "Administrative accounts follow least privilege",
-          "type": "HC",
+          "id": "l360c_det_001",
+          "text": "Cloud-delivered MITRE ATT&CK detection rules are enabled and synced",
+          "type": "PU",
           "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Administrative accounts follow least privilege.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 6.3",
-            "name": "Require MFA for Externally-Exposed Applications",
-            "weight": 2
-          }
+          "recommendation": "Verify all cloud-delivered detection rules are enabled and on the latest version. Log360 Cloud automatically receives new detection rules from ManageEngine's threat research team. Ensure auto-update is enabled. Navigate to Detection > Rules > Update Status.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_det_002",
+          "text": "Custom detection rules are created for organization-specific threat scenarios",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Create custom detection rules for your unique threat model: privileged access outside business hours, high-volume data downloads from sensitive SaaS apps, VPN authentication from blacklisted countries, cloud service API abuse patterns. Use the no-code rule builder.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_det_003",
+          "text": "UEBA anomaly models are active with baselines established",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Ensure UEBA anomaly models are active and baselines have been established (30+ days). Cloud UEBA provides: user behavior profiling across cloud and on-prem activities, entity risk scoring, insider threat detection, and compromised account identification.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
         }
       ]
     },
     {
-      "id": "security-hardening",
-      "name": "Security Hardening",
+      "id": "ai_features",
+      "name": "AI & Automation",
       "criteria": [
         {
-          "id": "l360c_hardening_001",
-          "text": "Security hardening baseline is applied",
+          "id": "l360c_ai_001",
+          "text": "AI Alert Investigation Agent is enabled for autonomous alert triage",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable the AI Alert Investigation Agent in Log360 Cloud. Configure your LLM provider (OpenAI or Azure OpenAI with BYO API key). The agent autonomously triages alerts: entity extraction, MITRE ATT&CK mapping, attack timeline, suggested remediation, auto-closure of false positives, and duplicate flagging.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ai_002",
+          "text": "Zia AI Assistant is configured for natural language log queries",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure and train team on Zia AI Assistant for natural language queries. Zia allows analysts to query complex log data in plain English: 'Show all AWS IAM policy changes in the last 7 days', 'Find all users who logged in from multiple countries today'. Train team on effective prompt construction.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ai_003",
+          "text": "SOAR playbooks are configured for automated incident response",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure Log360 Cloud SOAR playbooks for cloud-specific incident types: cloud account compromise response (disable IAM user, revoke access keys), SaaS data exfiltration response, cloud misconfiguration auto-remediation, and API abuse response. Test all playbooks in non-production environment.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "centralized_mgmt",
+      "name": "Centralized Integration Management",
+      "criteria": [
+        {
+          "id": "l360c_cm_001",
+          "text": "Centralized integration management console is configured for all connected sources",
           "type": "HC",
           "helpLink": "",
-          "recommendation": "Review and validate this item with the official checklist: Security hardening baseline is applied.",
-          "pending_user_verification": true,
-          "cis_mapping": {
-            "control": "CIS 4.1",
-            "name": "Establish and Maintain a Secure Configuration Process",
-            "weight": 2
-          }
+          "recommendation": "Use the Centralized Integration Management console (new cloud feature) to manage all connected data sources and integrations from a single interface. Monitor integration health, manage credentials, and view collection statistics. Navigate to Admin > Integration Management.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_cm_003",
+          "text": "ITDR (Identity Threat Detection & Response) integrations are configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure ITDR marketplace integrations: connect your identity providers (Azure AD, Okta, Ping Identity) for full identity lifecycle visibility. ITDR integrations enable detection of: account takeover, identity store attacks, federation attacks, MFA bypass attempts, and privilege escalation patterns.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_cm_004",
+          "text": "NDR (Network Detection & Response) integrations are configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure NDR integrations from the marketplace to add network-level detection to your cloud SIEM: network traffic analysis for lateral movement, C2 communications, DNS tunneling, and data exfiltration. Correlate NDR alerts with SIEM events for multi-layer attack detection.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "compliance_reporting",
+      "name": "Compliance & Reporting",
+      "criteria": [
+        {
+          "id": "l360c_comp_001",
+          "text": "Compliance packs are deployed and configured for applicable frameworks",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Deploy compliance packs matching your regulatory obligations: PCI-DSS, HIPAA, SOX, GDPR, ISO 27001, NIST CSF, SOC 2. Compliance packs provide pre-mapped controls, automated evidence collection, and audit-ready reports. Navigate to Compliance > Marketplace to install applicable packs.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_comp_002",
+          "text": "Automated compliance reports are scheduled and delivered to stakeholders",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Schedule automated compliance reports for delivery to GRC team, compliance auditors, and executives. Configure: weekly operational reports for SOC team, monthly compliance posture reports for GRC, quarterly executive dashboards for CISO. Ensure reports include trend data and remediation status.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_comp_003",
+          "text": "Log search and investigation capabilities are validated with SOC team trained",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Validate that SOC analysts can efficiently search logs for incident investigation. Conduct quarterly tabletop exercises: give analysts a simulated incident scenario and measure time-to-investigation. Optimize search performance and train on advanced search operators.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "admin_security",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "l360c_sec_001",
+          "text": "Multi-factor authentication is enforced for all Log360 Cloud admin accounts",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Enforce MFA for all Log360 Cloud accounts. Use your enterprise SSO (Azure AD, Okta) with MFA enforced via Conditional Access policies. Alternatively, enable built-in TOTP MFA. Admin account compromise in cloud SIEM is catastrophic—it provides full visibility into your security posture and response capabilities.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_sec_002",
+          "text": "Role-based access control is configured with least-privilege roles",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Define RBAC roles in Log360 Cloud: Analyst (search, view, respond), Auditor (read-only reports), Engineer (configuration, search), Administrator (full access). Assign users to minimum-required roles. Audit role assignments quarterly and revoke access for departed employees immediately.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_sec_003",
+          "text": "Data encryption is verified (at-rest and in-transit)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Verify Log360 Cloud encrypts log data at rest (AES-256) and in transit (TLS 1.2+). Review the cloud security documentation and request encryption certificates/documentation for compliance auditors. Ensure your data retention and encryption key management policies align with regulatory requirements.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_sec_004",
+          "text": "Data retention policies are configured matching compliance requirements",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Configure log data retention in Log360 Cloud to match your longest applicable compliance requirement. Remember: GDPR requires data minimization but PCI-DSS requires 12 months online + 12 months offline. Configure tiered retention and ensure your subscription tier includes sufficient storage. Navigate to Admin > Retention Policy.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "l360c_ai_enabled",
+          "text": "AI is enabled",
+          "type": "HC",
+          "statusOptions": [
+            "yes",
+            "no"
+          ],
+          "helpLink": "",
+          "recommendation": "Enable AI features in Log360 Cloud to unlock the AI Alert Investigation Agent, Zia AI Assistant, and AI-powered UEBA capabilities. Navigate to Admin > AI Settings to enable."
         }
       ]
     }
