@@ -36,7 +36,7 @@ async function init() {
     `${assessment.customer_name} · ${assessment.customer_domain || '—'}`;
   for (const c of (assessment.selected_components || [])) {
     try { templates[c] = await Api.getCriteria(c); }
-    catch (e) { templates[c] = { component: c, name: c, sections: [] }; }
+    catch (e) { console.error(`Failed to load criteria for ${c}:`, e); templates[c] = { component: c, name: c, sections: [] }; }
     data.statuses[c] = assessment.components?.[c]?.criteria_statuses || {};
   }
   buildNav();

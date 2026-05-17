@@ -6,6 +6,8 @@
     "releaseNotesUrl": "",
     "documentationUrl": ""
   },
+  "pending_user_verification": true,
+  "banner": "Log360 Cloud criteria are pending official source verification. Please provide the official Log360 Cloud Help Portal documentation.",
   "sections": [
     {
       "id": "setup",
