@@ -1,7 +1,7 @@
 {
-  "component": "log360",
-  "name": "Log360",
+  "component": "ad360",
+  "name": "AD360",
   "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
-  "criteria_source": "CS HealthCheck Criteria.txt",
+  "criteria_source": "AD360 Health Check Criteria.txt",
   "sections": []
 }

@@ -1,0 +1,108 @@
+# Docs to Verify
+
+The following documentation references were mentioned by name in source discussions but could not be safely verified to exact official help URLs during this rebuild. These remain intentionally unset (`helpLink: ""`) until user-provided authoritative URLs are supplied.
+
+- Upgrade
+- Agent Guide
+- File Auditing
+- Member Server Auditing
+- Custom Alerts
+- Alert Me
+- Business Hours
+- Archive Settings
+- SIEM Integration
+- NAT
+- USR
+- Security Advisories
+- AD Backup and recovery
+- Revert AD Changes
+- Schedule Reports
+- Endpoint DLP configuration
+- Setting Up Cloud Protection
+- Network Requirements
+- Managing Reports
+- Alert Profile Configuration
+- SQL Auditing
+- Application Logging
+- File Integrity Monitoring
+- Import Log Files
+- Cloud Sources
+- Agent Configuration
+- Custom Threat Sources
+- Advanced Threat Analytics
+- Threat Whitelisting
+- Logon Setting
+- Log Collection Filter
+- Log Collection Failure Alerts
+- Log Forwarder
+- Custom Log Parser
+- Tags
+- REST APIs
+- SSL Certificate
+- Proxy server
+- Re-branding
+- Integration
+- Manage Technicians
+- High Availability
+- Auto update
+- Logon settings
+- Reverse Proxy
+- SSL Tool
+- Product Settings
+- Mail settings
+- SMS settings
+- Proxy
+- Notifications
+- Database settings
+- API
+- Templates
+- User creation / User Modification rules
+- Custom reports
+- Compliance reports
+- Reports from CSV
+- M365 Management
+- M365 Reports
+- Help desk role
+- Technician Audit Archive Settings
+- Anomaly Reports
+- Workflow
+- Automation
+- Automation Policy
+- Orchestration templates
+- Application Integration
+- Access Certification
+- Orchestration
+- Organizational attributes
+- Custom LDAP attributes
+- Delete / Disable Policy
+- Load Balancing
+- SSL Configuration
+- Preferences
+- Retention Settings
+- Environment Variable
+- AD Search Settings
+- Security Hardening
+- Notification Profile
+- AD Backup and Recovery
+- Azure AD Backup and Recovery
+- Google Workspace backup & recovery
+- Identity Risk Assessment Add-on
+- Multi-factor Authentication
+- Password Expiry Notification
+- Password policy enforcer
+- Password Sync Agent
+- Password Synchronizer
+- Single Sign-On
+- JIT
+- Conditional Access
+- Directory Self-service
+- Quick Enrollment
+- GINA/Mac/Linux installation
+- ADSelfService Plus mobile app
+- Self-Service Approval Workflow
+- Password Strengtheners
+- Security Q&A Strengtheners
+- Anti-Hacking system
+- Email server configuration
+- Restrict Users
+- Post-deployment Security Measures

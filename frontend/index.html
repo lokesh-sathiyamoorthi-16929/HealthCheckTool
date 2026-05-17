@@ -1,290 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HCT — Health Check Tool</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HCT</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-<div class="app-wrapper">
-
-  <!-- Sidebar -->
-  <nav class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <div class="brand-logo">🛡️ HCT</div>
-      <div class="brand-sub">Health Check Tool</div>
-    </div>
-
-    <span class="sidebar-section-label">Navigation</span>
-    <ul class="sidebar-nav">
-      <li><a href="index.html" class="active"><span class="nav-icon">🏠</span> Home</a></li>
-      <li><a href="dashboard.html"><span class="nav-icon">📊</span> Customers Dashboard</a></li>
-    </ul>
-
-    <span class="sidebar-section-label">Products</span>
-    <ul class="sidebar-nav">
-      <li><a href="#"><span class="nav-icon">🛡️</span> ADAudit Plus</a></li>
-      <li><a href="#"><span class="nav-icon">🔒</span> DataSecurity Plus</a></li>
-      <li><a href="#"><span class="nav-icon">📋</span> EventLog Analyzer</a></li>
-      <li><a href="#"><span class="nav-icon">🖥️</span> Log360</a></li>
-      <li><a href="#"><span class="nav-icon">☁️</span> Log360 Cloud</a></li>
-    </ul>
-
-    <div class="sidebar-bottom">
-      ManageEngine HCT<br>Health Check Tool v2.0
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <header class="top-bar">
-      <button class="hamburger" id="hamburger">☰</button>
-      <div class="top-bar-title">🛡️ HCT — Health Check &amp; Scorecard Tool</div>
-      <div class="top-bar-actions">
-        <a href="dashboard.html" class="btn btn-secondary btn-sm">📊 Dashboard</a>
-      </div>
-    </header>
-
-    <main class="page-body">
-
-      <!-- Hero Section -->
-      <div style="background:linear-gradient(135deg,#1a3e72,#2a5298);color:#fff;border-radius:12px;padding:40px 36px;margin-bottom:28px;">
-        <div style="max-width:680px;">
-          <h1 style="color:#fff;font-size:2rem;margin-bottom:12px;">HCT — Health Check &amp; Product Utilization Scorecard</h1>
-          <p style="font-size:1rem;opacity:0.9;line-height:1.7;margin-bottom:24px;">
-            A comprehensive assessment tool for ManageEngine consultants and customer success engineers.
-            Evaluate your customer's Log360 deployment, generate actionable recommendations, and export professional reports.
-          </p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="dashboard.html" class="btn btn-lg" style="background:#fff;color:#1a3e72;border-color:#fff;">
-              📊 Customers Dashboard
-            </a>
-            <button class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.4);" onclick="document.getElementById('new-assessment-modal').classList.add('show')">
-              ➕ New Assessment
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature Cards -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px;">
-        <div class="card">
-          <div class="card-body" style="text-align:center;padding:28px 20px;">
-            <div style="font-size:2rem;margin-bottom:12px;">🎯</div>
-            <h3 style="margin-bottom:8px;">5 Components Covered</h3>
-            <p class="text-muted text-small">ADAudit Plus, DataSecurity Plus, EventLog Analyzer, Log360 (13000 series with native UEBA), and Log360 Cloud</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body" style="text-align:center;padding:28px 20px;">
-            <div style="font-size:2rem;margin-bottom:12px;">📈</div>
-            <h3 style="margin-bottom:8px;">HC &amp; PU Scoring</h3>
-            <p class="text-muted text-small">Separate Health Check and Product Utilization scores with configurable weights and visual scorecards</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body" style="text-align:center;padding:28px 20px;">
-            <div style="font-size:2rem;margin-bottom:12px;">🤖</div>
-            <h3 style="margin-bottom:8px;">Smart Recommendations</h3>
-            <p class="text-muted text-small">Expert-curated recommendations for every gap, editable inline before export</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body" style="text-align:center;padding:28px 20px;">
-            <div style="font-size:2rem;margin-bottom:12px;">📤</div>
-            <h3 style="margin-bottom:8px;">Export &amp; Share</h3>
-            <p class="text-muted text-small">Export to PDF, HTML, and CSV/Excel. Share reports directly with customers</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Components Overview -->
-      <div class="card mb-3">
-        <div class="card-header"><h2>📦 Covered Components &amp; Latest Builds</h2></div>
-        <div class="card-body" style="padding:0;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Latest Build</th>
-                <th>Key Focus Areas</th>
-                <th>Release Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>🛡️ ADAudit Plus</strong></td>
-                <td>7.5 (Build 7500+)</td>
-                <td>ITDR, Attack Surface Analyzer, AI Anomaly Detection, Azure AD / Entra ID, MITRE ATT&CK</td>
-                <td><a href="https://www.manageengine.com/products/active-directory-audit/release-notes.html" target="_blank">View ↗</a></td>
-              </tr>
-              <tr>
-                <td><strong>🔒 DataSecurity Plus</strong></td>
-                <td>6.2 (Build 6200+)</td>
-                <td>AI Content Classification, Ransomware Detection, CASB/Cloud Protection, DLP, ROT Analysis</td>
-                <td><a href="https://www.manageengine.com/data-security/release-notes.html" target="_blank">View ↗</a></td>
-              </tr>
-              <tr>
-                <td><strong>📋 EventLog Analyzer</strong></td>
-                <td>13000 Series</td>
-                <td>AI Log Parser, Enhanced Correlation, Cloud Sources (AWS/Azure/GCP/SaaS), MITRE ATT&CK, TI</td>
-                <td><a href="https://www.manageengine.com/products/eventlog/release-notes.html" target="_blank">View ↗</a></td>
-              </tr>
-              <tr>
-                <td><strong>🖥️ Log360</strong></td>
-                <td>13000 Series</td>
-                <td>AI Alert Investigation, Zia AI, Native SOAR, Re-architected Detection, Native UEBA, EDR/ITDR/NDR</td>
-                <td><a href="https://www.manageengine.com/log-management/release-notes.html" target="_blank">View ↗</a></td>
-              </tr>
-              <tr>
-                <td><strong>☁️ Log360 Cloud</strong></td>
-                <td>Cloud (2025/2026)</td>
-                <td>AI Agent, SOAR, Centralized Integrations, Agent Health, Log Collection Alerts, Compliance Packs</td>
-                <td><a href="https://www.manageengine.com/log-management/cloud/features-new.html" target="_blank">View ↗</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- How it Works -->
-      <div class="card">
-        <div class="card-header"><h2>🚀 How to Use</h2></div>
-        <div class="card-body">
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
-            <div style="display:flex;gap:12px;">
-              <div style="width:32px;height:32px;background:#1a3e72;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div>
-              <div><strong>Create Assessment</strong><br><span class="text-small text-muted">Start a new assessment for your customer by clicking "New Assessment"</span></div>
-            </div>
-            <div style="display:flex;gap:12px;">
-              <div style="width:32px;height:32px;background:#1a3e72;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div>
-              <div><strong>Assess Each Component</strong><br><span class="text-small text-muted">Go through each criterion and mark it as Configured, Partial, Not Configured, or N/A</span></div>
-            </div>
-            <div style="display:flex;gap:12px;">
-              <div style="width:32px;height:32px;background:#1a3e72;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div>
-              <div><strong>Review Recommendations</strong><br><span class="text-small text-muted">Auto-generated expert recommendations appear for all gaps. Edit them as needed</span></div>
-            </div>
-            <div style="display:flex;gap:12px;">
-              <div style="width:32px;height:32px;background:#1a3e72;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">4</div>
-              <div><strong>Export &amp; Share</strong><br><span class="text-small text-muted">Export the full report as PDF, HTML, or CSV and share with the customer</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
-</div>
-
-<!-- New Assessment Modal -->
-<div class="modal-overlay" id="new-assessment-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 class="modal-title">➕ New Customer Assessment</h2>
-      <button class="modal-close" onclick="document.getElementById('new-assessment-modal').classList.remove('show')">✕</button>
-    </div>
-    <div class="modal-body">
-      <form id="new-assessment-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Customer Name *</label>
-            <input type="text" id="na-customer" class="form-control" placeholder="e.g. Acme Corporation" required>
-          </div>
-          <div class="form-group">
-            <label>Domain</label>
-            <input type="text" id="na-domain" class="form-control" placeholder="e.g. acme.com">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Assessor Name</label>
-            <input type="text" id="na-assessor" class="form-control" placeholder="Your name">
-          </div>
-          <div class="form-group">
-            <label>Assessment Date</label>
-            <input type="date" id="na-date" class="form-control">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Which components is this customer using?</label>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
-            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="nc-adaudit" checked> 🛡️ ADAudit Plus
-            </label>
-            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="nc-dataSecurity" checked> 🔒 DataSecurity Plus
-            </label>
-            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="nc-eventlog" checked> 📋 EventLog Analyzer
-            </label>
-            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="nc-log360" checked> 🖥️ Log360
-            </label>
-            <label style="font-weight:normal;display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="nc-log360cloud" checked> ☁️ Log360 Cloud
-            </label>
-          </div>
-        </div>
-        <p class="text-small text-muted">* Required fields. All data is saved automatically as you work.</p>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="document.getElementById('new-assessment-modal').classList.remove('show')">Cancel</button>
-      <button class="btn btn-primary" id="create-assessment-btn">✅ Create Assessment</button>
-    </div>
-  </div>
-</div>
-
-<div id="toast-container" class="toast-container"></div>
-
-<script src="js/api.js"></script>
-<script>
-  // Set today's date as default
-  document.getElementById('na-date').value = new Date().toISOString().split('T')[0];
-
-  // Close modal on overlay click
-  document.getElementById('new-assessment-modal').addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('show');
-  });
-
-  // Hamburger
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('open');
-  });
-
-  // Create Assessment
-  document.getElementById('create-assessment-btn').addEventListener('click', async () => {
-    const name = document.getElementById('na-customer').value.trim();
-    if (!name) {
-      alert('Customer name is required.');
-      return;
-    }
-      const allComps = ['adaudit', 'dataSecurity', 'eventlog', 'log360', 'log360cloud'];
-      const selectedComponents = allComps.filter(c => document.getElementById(`nc-${c}`)?.checked);
-      if (selectedComponents.length === 0) {
-        alert('Please select at least one component.');
-        return;
-      }
-      const btn = document.getElementById('create-assessment-btn');
-      btn.disabled = true;
-      btn.textContent = 'Creating…';
-
-      try {
-        const result = await Api.createAssessment({
-          customer_name:  name,
-          customer_domain: document.getElementById('na-domain').value.trim(),
-          assessor_name:  document.getElementById('na-assessor').value.trim(),
-          assessment_date: document.getElementById('na-date').value,
-          selected_components: selectedComponents
-        });
-        window.location.href = `assessment.html?id=${result.id}`;
-      } catch (err) {
-        alert('Failed to create assessment: ' + err.message);
-        btn.disabled = false;
-        btn.textContent = '✅ Create Assessment';
-      }
-  });
-</script>
+  <header class="topbar"><div class="brand">HCT</div></header>
+  <main class="page">
+    <section class="hero card">
+      <h1>Health Check Tool</h1>
+      <p>Start a new health check and produce a concise leadership-ready report.</p>
+      <a class="btn primary" href="customer-details.html">Start a new health check</a>
+    </section>
+    <section class="card">
+      <h2>Past assessments</h2>
+      <div id="past-list" class="list"></div>
+    </section>
+  </main>
+  <script src="js/api.js"></script>
+  <script>
+    (async function load(){
+      const host=document.getElementById('past-list');
+      try{
+        const items=await Api.listAssessments();
+        if(!items.length){host.innerHTML='<p class="muted">No assessments yet.</p>';return;}
+        host.innerHTML=items.map(a=>`<a class="list-item" href="assessment.html?id=${a.id}"><span>${a.customer_name}</span><span>${a.overall_score ?? 0}%</span></a>`).join('');
+      }catch(e){host.innerHTML='<p class="muted">Failed to load assessments.</p>';}
+    })();
+  </script>
 </body>
 </html>

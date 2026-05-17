@@ -1,0 +1,7 @@
+{
+  "component": "exchangereporter",
+  "name": "Exchange Reporter Plus",
+  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
+  "criteria_source": "AD360 Health Check Criteria.txt",
+  "sections": []
+}

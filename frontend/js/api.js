@@ -1,36 +1,7 @@
-/**
- * api.js — Centralized API calls to the backend
- */
-
-const API_BASE = '/api';
-
-const Api = {
-  async request(method, path, body) {
-    const opts = {
-      method,
-      headers: { 'Content-Type': 'application/json' }
-    };
-    if (body) opts.body = JSON.stringify(body);
-
-    const resp = await fetch(API_BASE + path, opts);
-    const data = await resp.json();
-
-    if (!resp.ok) {
-      throw new Error(data.error || `HTTP ${resp.status}`);
-    }
-    return data;
-  },
-
-  // Assessments
-  listAssessments()             { return this.request('GET',    '/assessments'); },
-  createAssessment(data)        { return this.request('POST',   '/assessments', data); },
-  getAssessment(id)             { return this.request('GET',    `/assessments/${id}`); },
-  updateAssessment(id, data)    { return this.request('PUT',    `/assessments/${id}`, data); },
-  deleteAssessment(id)          { return this.request('DELETE', `/assessments/${id}`); },
-
-  // Criteria templates
-  getCriteria(component)        { return this.request('GET',    `/criteria/${component}`); },
-  listComponents()              { return this.request('GET',    '/criteria'); },
+const Api={
+  async listAssessments(){const r=await fetch('/api/assessments');if(!r.ok)throw new Error('Failed');return r.json();},
+  async getAssessment(id){const r=await fetch(`/api/assessments/${id}`);if(!r.ok)throw new Error('Failed');return r.json();},
+  async createAssessment(payload){const r=await fetch('/api/assessments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error(await r.text());return r.json();},
+  async updateAssessment(id,payload){const r=await fetch(`/api/assessments/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error(await r.text());return r.json();},
+  async getCriteria(component){const r=await fetch(`/api/criteria/${component}`);if(!r.ok)throw new Error(`Missing ${component}`);return r.json();}
 };
-
-window.Api = Api;

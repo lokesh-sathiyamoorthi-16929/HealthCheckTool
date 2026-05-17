@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step 1 · Customer Details</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar"><div class="brand">HCT</div></header>
+  <main class="page narrow">
+    <div class="steps"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+    <section class="card">
+      <h1>Customer Details</h1>
+      <form id="details-form" class="form-grid">
+        <label>Customer Name<input required name="customer_name" /></label>
+        <label>Domain<input name="customer_domain" /></label>
+        <label>Assessor Name<input name="assessor_name" /></label>
+        <label>Assessment Date<input name="assessment_date" type="date" /></label>
+        <button class="btn primary" type="submit">Continue →</button>
+      </form>
+    </section>
+  </main>
+  <script src="js/wizard.js"></script>
+</body>
+</html>
