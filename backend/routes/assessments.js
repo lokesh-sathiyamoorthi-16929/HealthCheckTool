@@ -19,7 +19,7 @@ const DEFAULT_COMPONENTS = [
 ];
 
 const DEFAULT_WEIGHTS = DEFAULT_COMPONENTS.reduce((acc, key) => {
-  acc[key] = 1;
+  acc[key] = 20;
   return acc;
 }, {});
 
@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
 
         let totalWeight = 0, weightedOverall = 0;
         for (const [comp, data] of Object.entries(components)) {
-          const w = weights[comp] || 1;
+          const w = weights[comp] || 20;
           totalWeight += w;
           weightedOverall += (data.overall_score || 0) * w;
         }

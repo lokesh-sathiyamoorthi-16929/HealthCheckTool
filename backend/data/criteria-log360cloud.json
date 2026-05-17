@@ -1,7 +1,11 @@
 {
   "component": "log360cloud",
   "name": "Log360 Cloud",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
   "pending_user_verification": true,
   "banner": "Log360 Cloud criteria pending official source from user.",
   "sections": [
@@ -9,16 +13,166 @@
       "id": "services",
       "name": "Services",
       "criteria": [
-        {"id":"l360c_services_001","text":"Product installed as a service","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 4.1","name":"Establish and Maintain a Secure Configuration Process","weight":2}},
-        {"id":"l360c_services_002","text":"Product is upgraded to the latest build","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 7.7","name":"Remediate Detected Vulnerabilities","weight":2}}
+        {
+          "id": "l360c_services_001",
+          "text": "Product installed as a service",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Product installed as a service.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Establish and Maintain a Secure Configuration Process",
+            "weight": 2
+          }
+        },
+        {
+          "id": "l360c_services_002",
+          "text": "Product is upgraded to the latest build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Product is upgraded to the latest build.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Detected Vulnerabilities",
+            "weight": 2
+          }
+        }
       ]
     },
-    {"id":"licensing","name":"Licensing","criteria":[{"id":"l360c_licensing_001","text":"Licensing is valid and active","type":"PU","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"","name":"Operational hygiene","weight":1}}]},
-    {"id":"antivirus","name":"Antivirus","criteria":[{"id":"l360c_antivirus_001","text":"Endpoint antivirus exclusions are reviewed","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 10.1","name":"Deploy and Maintain Anti-Malware Software","weight":2}}]},
-    {"id":"firewall","name":"Firewall","criteria":[{"id":"l360c_firewall_001","text":"Required firewall ports are allowed","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 12.4","name":"Require Host-Based Firewall or Port-Filtering","weight":2}}]},
-    {"id":"hardware","name":"Hardware","criteria":[{"id":"l360c_hardware_001","text":"Platform resources are sized appropriately","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"","name":"Operational hygiene","weight":1}}]},
-    {"id":"reports","name":"Reports","criteria":[{"id":"l360c_reports_001","text":"At least one scheduled report is configured","type":"PU","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 8.2","name":"Collect Audit Logs","weight":1}}]},
-    {"id":"admin","name":"Admin","criteria":[{"id":"l360c_admin_001","text":"Administrative accounts follow least privilege","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 6.3","name":"Require MFA for Externally-Exposed Applications","weight":2}}]},
-    {"id":"security-hardening","name":"Security Hardening","criteria":[{"id":"l360c_hardening_001","text":"Security hardening baseline is applied","type":"HC","helpLink":"","recommendation":"Pending official checklist.","pending_user_verification":true,"cis_mapping":{"control":"CIS 4.1","name":"Establish and Maintain a Secure Configuration Process","weight":2}}]}
+    {
+      "id": "licensing",
+      "name": "Licensing",
+      "criteria": [
+        {
+          "id": "l360c_licensing_001",
+          "text": "Licensing is valid and active",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Licensing is valid and active.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "",
+            "name": "Operational hygiene",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "antivirus",
+      "name": "Antivirus",
+      "criteria": [
+        {
+          "id": "l360c_antivirus_001",
+          "text": "Endpoint antivirus exclusions are reviewed",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Endpoint antivirus exclusions are reviewed.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 10.1",
+            "name": "Deploy and Maintain Anti-Malware Software",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "firewall",
+      "name": "Firewall",
+      "criteria": [
+        {
+          "id": "l360c_firewall_001",
+          "text": "Required firewall ports are allowed",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Required firewall ports are allowed.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 12.4",
+            "name": "Require Host-Based Firewall or Port-Filtering",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "hardware",
+      "name": "Hardware",
+      "criteria": [
+        {
+          "id": "l360c_hardware_001",
+          "text": "Platform resources are sized appropriately",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Platform resources are sized appropriately.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "",
+            "name": "Operational hygiene",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "reports",
+      "name": "Reports",
+      "criteria": [
+        {
+          "id": "l360c_reports_001",
+          "text": "At least one scheduled report is configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: At least one scheduled report is configured.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 8.2",
+            "name": "Collect Audit Logs",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin",
+      "criteria": [
+        {
+          "id": "l360c_admin_001",
+          "text": "Administrative accounts follow least privilege",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Administrative accounts follow least privilege.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA for Externally-Exposed Applications",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "security-hardening",
+      "name": "Security Hardening",
+      "criteria": [
+        {
+          "id": "l360c_hardening_001",
+          "text": "Security hardening baseline is applied",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official checklist: Security hardening baseline is applied.",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Establish and Maintain a Secure Configuration Process",
+            "weight": 2
+          }
+        }
+      ]
+    }
   ]
 }
