@@ -309,17 +309,6 @@
             "not_configured",
             "na"
           ]
-        },
-        {
-          "id": "l360_ai_enabled",
-          "text": "AI is enabled",
-          "type": "HC",
-          "statusOptions": [
-            "yes",
-            "no"
-          ],
-          "helpLink": "",
-          "recommendation": "Enable AI features in Log360 to unlock AI Alert Investigation Agent, Zia AI Assistant, and AI-powered anomaly detection. Navigate to Admin > AI Settings to enable."
         }
       ]
     }

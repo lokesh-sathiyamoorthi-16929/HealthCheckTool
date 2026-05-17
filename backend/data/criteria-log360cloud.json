@@ -182,51 +182,6 @@
       ]
     },
     {
-      "id": "ai_features",
-      "name": "AI & Automation",
-      "criteria": [
-        {
-          "id": "l360c_ai_001",
-          "text": "AI Alert Investigation Agent is enabled for autonomous alert triage",
-          "type": "PU",
-          "helpLink": "",
-          "recommendation": "Enable the AI Alert Investigation Agent in Log360 Cloud. Configure your LLM provider (OpenAI or Azure OpenAI with BYO API key). The agent autonomously triages alerts: entity extraction, MITRE ATT&CK mapping, attack timeline, suggested remediation, auto-closure of false positives, and duplicate flagging.",
-          "statusOptions": [
-            "configured",
-            "partial",
-            "not_configured",
-            "na"
-          ]
-        },
-        {
-          "id": "l360c_ai_002",
-          "text": "Zia AI Assistant is configured for natural language log queries",
-          "type": "PU",
-          "helpLink": "",
-          "recommendation": "Configure and train team on Zia AI Assistant for natural language queries. Zia allows analysts to query complex log data in plain English: 'Show all AWS IAM policy changes in the last 7 days', 'Find all users who logged in from multiple countries today'. Train team on effective prompt construction.",
-          "statusOptions": [
-            "configured",
-            "partial",
-            "not_configured",
-            "na"
-          ]
-        },
-        {
-          "id": "l360c_ai_003",
-          "text": "SOAR playbooks are configured for automated incident response",
-          "type": "PU",
-          "helpLink": "",
-          "recommendation": "Configure Log360 Cloud SOAR playbooks for cloud-specific incident types: cloud account compromise response (disable IAM user, revoke access keys), SaaS data exfiltration response, cloud misconfiguration auto-remediation, and API abuse response. Test all playbooks in non-production environment.",
-          "statusOptions": [
-            "configured",
-            "partial",
-            "not_configured",
-            "na"
-          ]
-        }
-      ]
-    },
-    {
       "id": "centralized_mgmt",
       "name": "Centralized Integration Management",
       "criteria": [
@@ -371,17 +326,6 @@
             "not_configured",
             "na"
           ]
-        },
-        {
-          "id": "l360c_ai_enabled",
-          "text": "AI is enabled",
-          "type": "HC",
-          "statusOptions": [
-            "yes",
-            "no"
-          ],
-          "helpLink": "",
-          "recommendation": "Enable AI features in Log360 Cloud to unlock the AI Alert Investigation Agent, Zia AI Assistant, and AI-powered UEBA capabilities. Navigate to Admin > AI Settings to enable."
         }
       ]
     }
