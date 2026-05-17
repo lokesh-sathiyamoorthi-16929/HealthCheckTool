@@ -1,7 +1,194 @@
 {
   "component": "admanager",
   "name": "ADManager Plus",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
   "criteria_source": "AD360 Health Check Criteria.txt",
-  "sections": []
+  "pending_user_verification": true,
+  "banner": "ADManager Plus criteria are pending official source verification. Please provide the official AD360 Health Check Criteria txt file.",
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "admp_svc_001",
+          "text": "ADManager Plus service is running under a dedicated service account",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADManager Plus service is running under a dedicated service account",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 2
+          }
+        },
+        {
+          "id": "admp_svc_002",
+          "text": "ADManager Plus is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: ADManager Plus is on the latest available build",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Vulnerabilities",
+            "weight": 2
+          }
+        },
+        {
+          "id": "admp_svc_003",
+          "text": "Server hardware meets minimum requirements",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Server hardware meets minimum requirements",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "licensing",
+      "name": "Licensing",
+      "criteria": [
+        {
+          "id": "admp_lic_001",
+          "text": "License covers all managed domains/users",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: License covers all managed domains/users",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 2.1",
+            "name": "Maintain Inventory of Software",
+            "weight": 1
+          }
+        },
+        {
+          "id": "admp_lic_002",
+          "text": "Annual Maintenance Subscription (AMS) is active",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Annual Maintenance Subscription (AMS) is active",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 2.1",
+            "name": "Maintain Inventory of Software",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "name": "Automation & Workflow",
+      "criteria": [
+        {
+          "id": "admp_auto_001",
+          "text": "User creation/modification automation rules are configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: User creation/modification automation rules are configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.3",
+            "name": "Disable Dormant Accounts",
+            "weight": 1
+          }
+        },
+        {
+          "id": "admp_auto_002",
+          "text": "Delete/disable policy for inactive accounts is configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Delete/disable policy for inactive accounts is configured",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 5.3",
+            "name": "Disable Dormant Accounts",
+            "weight": 2
+          }
+        },
+        {
+          "id": "admp_auto_003",
+          "text": "Workflow approvals are enabled for sensitive AD changes",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Workflow approvals are enabled for sensitive AD changes",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 2
+          }
+        },
+        {
+          "id": "admp_auto_004",
+          "text": "Custom reports are configured and scheduled",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Custom reports are configured and scheduled",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 8.2",
+            "name": "Collect Audit Logs",
+            "weight": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "admp_adm_001",
+          "text": "HTTPS/TLS is enforced for the web console",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: HTTPS/TLS is enforced for the web console",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.10",
+            "name": "Encrypt Data in Transit",
+            "weight": 2
+          }
+        },
+        {
+          "id": "admp_adm_002",
+          "text": "Two-factor authentication is enabled for admin accounts",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Two-factor authentication is enabled for admin accounts",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.3",
+            "name": "Require MFA",
+            "weight": 2
+          }
+        },
+        {
+          "id": "admp_adm_003",
+          "text": "Role-based access control is configured with least privilege",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Role-based access control is configured with least privilege",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 2
+          }
+        }
+      ]
+    }
+  ]
 }

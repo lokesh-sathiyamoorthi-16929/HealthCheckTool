@@ -1,7 +1,148 @@
 {
   "component": "recoverymanager",
   "name": "RecoveryManager Plus",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
-  "criteria_source": "AD360 Health Check Criteria.txt",
-  "sections": []
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
+  "pending_user_verification": true,
+  "banner": "RecoveryManager Plus criteria are pending official source verification. Please provide the official Health Check Criteria txt file.",
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "rmp_svc_001",
+          "text": "RecoveryManager Plus service is running under a dedicated service account",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: RecoveryManager Plus service is running under a dedicated service account",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 4.1",
+            "name": "Secure Configuration",
+            "weight": 2
+          }
+        },
+        {
+          "id": "rmp_svc_002",
+          "text": "RecoveryManager Plus is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: RecoveryManager Plus is on the latest available build",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 7.7",
+            "name": "Remediate Vulnerabilities",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "ad_backup",
+      "name": "AD Backup & Recovery",
+      "criteria": [
+        {
+          "id": "rmp_bkp_001",
+          "text": "Regular AD backup schedule is configured (daily/weekly)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Regular AD backup schedule is configured (daily/weekly)",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.2",
+            "name": "Perform Automated Backups",
+            "weight": 3
+          }
+        },
+        {
+          "id": "rmp_bkp_002",
+          "text": "Backup retention policy meets organizational requirements",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Backup retention policy meets organizational requirements",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.2",
+            "name": "Perform Automated Backups",
+            "weight": 2
+          }
+        },
+        {
+          "id": "rmp_bkp_003",
+          "text": "AD backup recovery has been tested in the last 6 months",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: AD backup recovery has been tested in the last 6 months",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.4",
+            "name": "Establish Recovery Process",
+            "weight": 3
+          }
+        },
+        {
+          "id": "rmp_bkp_004",
+          "text": "Azure AD/Entra ID backup is configured if in use",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Azure AD/Entra ID backup is configured if in use",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.2",
+            "name": "Perform Automated Backups",
+            "weight": 2
+          }
+        },
+        {
+          "id": "rmp_bkp_005",
+          "text": "Granular object-level restore has been tested",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Granular object-level restore has been tested",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 11.4",
+            "name": "Establish Recovery Process",
+            "weight": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Security",
+      "criteria": [
+        {
+          "id": "rmp_adm_001",
+          "text": "HTTPS/TLS is enforced for the web console",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: HTTPS/TLS is enforced for the web console",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 3.10",
+            "name": "Encrypt Data in Transit",
+            "weight": 2
+          }
+        },
+        {
+          "id": "rmp_adm_002",
+          "text": "Role-based access control is configured for backup operations",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and validate this item with the official product checklist: Role-based access control is configured for backup operations",
+          "pending_user_verification": true,
+          "cis_mapping": {
+            "control": "CIS 6.8",
+            "name": "Define Roles",
+            "weight": 2
+          }
+        }
+      ]
+    }
+  ]
 }

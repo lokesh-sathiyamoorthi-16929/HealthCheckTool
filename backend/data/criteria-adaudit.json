@@ -1,7 +1,624 @@
 {
   "component": "adaudit",
   "name": "ADAudit Plus",
-  "buildInfo": { "latestBuild": "", "releaseNotesUrl": "", "documentationUrl": "" },
-  "criteria_source": "CS HealthCheck Criteria.txt",
-  "sections": []
+  "buildInfo": {
+    "latestBuild": "",
+    "releaseNotesUrl": "",
+    "documentationUrl": ""
+  },
+  "sections": [
+    {
+      "id": "services",
+      "name": "Services & Infrastructure",
+      "criteria": [
+        {
+          "id": "adaudit_svc_001",
+          "text": "ADAudit Plus Windows service is running with a dedicated service account (not LocalSystem)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Configure ADAudit Plus to run under a dedicated service account with minimum required privileges. Using LocalSystem introduces unnecessary risk. Create a dedicated AD service account, grant it 'Log on as a service' right, and configure it in Services > ADAudit Plus > Properties > Log On.",
+          "statusOptions": [
+            "correct",
+            "partial",
+            "incorrect"
+          ]
+        },
+        {
+          "id": "adaudit_svc_002",
+          "text": "ADAudit Plus is deployed on a dedicated server (not co-hosted with other ManageEngine products)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "ADAudit Plus should run on its own dedicated server to prevent resource contention. Co-hosting with EventLog Analyzer or other products can cause performance degradation, missed audit events, and alerting delays. Refer to hardware sizing guide for recommended specs.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_svc_003",
+          "text": "ADAudit Plus server meets minimum hardware requirements (RAM, CPU, Disk) for the domain size",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Validate hardware against ManageEngine sizing guide. For environments with 1000+ users: minimum 8GB RAM (16GB recommended), 4 CPU cores, and 200GB+ SSD storage. Under-provisioned servers lead to log drops, alerting delays, and database corruption.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_svc_004",
+          "text": "ADAudit Plus is on the latest available build",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Update ADAudit Plus to the latest build immediately. Older builds may contain security vulnerabilities and lack critical features. Navigate to Admin > Product Updates to check and apply the latest patch. Always test in a non-production environment first.",
+          "statusOptions": [
+            "latest",
+            "one_behind",
+            "outdated",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_svc_005",
+          "text": "High Availability (HA) / failover is configured for the ADAudit Plus database",
+          "type": "INFO",
+          "helpLink": "",
+          "recommendation": "Configure HA for the backend database (MSSQL/PostgreSQL recommended over bundled PGSQL for production). Implement database mirroring or AlwaysOn AG to prevent audit data loss. The bundled PostgreSQL is suitable only for small deployments (<500 users).",
+          "statusOptions": [
+            "info"
+          ]
+        },
+        {
+          "id": "adaudit_svc_006",
+          "text": "ADAudit Plus is using an external database (MSSQL or PostgreSQL) for production",
+          "type": "INFO",
+          "helpLink": "",
+          "recommendation": "Migrate from the bundled PostgreSQL to an enterprise-grade MSSQL or PostgreSQL database for production environments. External databases provide better performance, backup integration, and HA options. Use Admin > Database Configuration to migrate.",
+          "statusOptions": [
+            "info"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "licensing",
+      "name": "Licensing",
+      "criteria": [
+        {
+          "id": "adaudit_lic_001",
+          "text": "ADAudit Plus license covers all monitored domain controllers",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Verify all DCs are within license limits. Under-licensed deployments automatically stop auditing DCs over the limit, creating blind spots. Go to License > Manage License to verify DC count vs license. Engage ManageEngine for volume licensing if needed.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_lic_002",
+          "text": "Annual Maintenance Subscription (AMS) is active for support and updates",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Ensure AMS is active to receive security patches, new features, and technical support. An expired AMS means the product can be used but no updates or support are available, creating security and compliance risks. Check expiry in Admin > License.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_lic_003",
+          "text": "Azure AD / Entra ID auditing add-on license is provisioned if Azure AD is in scope",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "If your organization uses Azure AD / Entra ID, ensure the Azure AD auditing license add-on is active. This enables auditing of Azure AD sign-ins, user/group changes, MFA events, Conditional Access policy changes, and privileged role assignments.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "antivirus",
+      "name": "Antivirus & Security Exclusions",
+      "criteria": [
+        {
+          "id": "adaudit_av_001",
+          "text": "Antivirus exclusions are configured for ADAudit Plus installation directory and database folders",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Configure AV exclusions for: installation directory (e.g., C:\\Program Files\\ADAuditPlus\\), data directory, and database files (.db, .conf). AV scanning of these directories causes performance degradation, false positives on log files, and potential database corruption.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_av_002",
+          "text": "Windows Firewall allows ADAudit Plus communication ports (8082/HTTPS, 389/LDAP, 636/LDAPS, 445/SMB)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Ensure firewall rules permit: TCP 8082 (HTTPS web console), TCP 389/636 (LDAP/LDAPS for AD communication), TCP/UDP 445 (SMB for agent deployment), TCP 1433 (if using MSSQL), TCP 5432 (if using PostgreSQL). Document all ports in your network security policy.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "domain_config",
+      "name": "Domain & AD Configuration",
+      "criteria": [
+        {
+          "id": "adaudit_dom_001",
+          "text": "All domain controllers in all monitored domains are discovered and auditing",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Go to Domain Settings and verify all DCs show 'Active' status. Missing DCs create audit gaps—privileged actions on unmonitored DCs will not be captured. Ensure all RODCs and newly promoted DCs are included. Enable automatic DC discovery.",
+          "statusOptions": [
+            "all",
+            "some",
+            "none"
+          ]
+        },
+        {
+          "id": "adaudit_dom_002",
+          "text": "Advanced Audit Policies (via GPO) are correctly configured on all Domain Controllers",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Use ADAudit Plus's built-in GPO configuration assistant (Domain Settings > Configure Audit Policies) to apply recommended audit policies. Manual policy configuration often misses critical subcategories. Verify with 'auditpol /get /category:*' on DCs and confirm events 4624, 4625, 4720, 4726, 4728, 5145 are being generated.",
+          "statusOptions": [
+            "all",
+            "some",
+            "none"
+          ]
+        },
+        {
+          "id": "adaudit_dom_003",
+          "text": "Security event log size on DCs is configured to minimum 4GB (4,194,304 KB) with overwrite as needed",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Increase the Windows Security Event Log size to at least 4GB on all DCs via GPO. The default 20MB size causes rapid event log rollover, resulting in missed events. Navigate to Computer Configuration > Windows Settings > Security Settings > Event Log > Maximum security log size.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_dom_004",
+          "text": "ADAudit Plus agent is deployed on all domain controllers for real-time auditing",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Deploy ADAudit Plus agents on all DCs for real-time (sub-second) event capture. Agent-less mode relies on WMI polling which can miss rapid event sequences and introduces latency. Go to Domain Settings > Configure > Agent Management to deploy agents.",
+          "statusOptions": [
+            "all",
+            "some",
+            "none"
+          ]
+        },
+        {
+          "id": "adaudit_dom_005",
+          "text": "Azure AD / Microsoft Entra ID tenant is connected and auditing",
+          "type": "PU/HC",
+          "helpLink": "",
+          "recommendation": "Connect your Azure AD tenant via Azure App Registration. Grant required Graph API permissions (AuditLog.Read.All, Directory.Read.All). Configure in Domain Settings > Azure AD. This enables hybrid identity visibility—critical for detecting account compromise across on-prem and cloud.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_dom_006",
+          "text": "Member server auditing is configured for file server and workstation monitoring",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable member server auditing for critical file servers, SQL servers, and privileged workstations. This captures local account activity, service changes, and local privileged actions that DCs do not log. Configure under Domain Settings > Member Servers.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_dom_007",
+          "text": "LAPS (Local Administrator Password Solution) audit monitoring is configured",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "If Microsoft LAPS or Windows LAPS is deployed, configure ADAudit Plus to monitor LAPS password reads and resets. Unauthorized LAPS password reads are a key lateral movement indicator. Navigate to Reports > LAPS Activity Reports.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reports",
+      "name": "Reports & Dashboards",
+      "criteria": [
+        {
+          "id": "adaudit_rpt_001",
+          "text": "Pre-built compliance reports (SOX, HIPAA, GDPR, PCI-DSS) are reviewed regularly",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Schedule automated delivery of compliance reports to relevant stakeholders. ADAudit Plus includes 300+ pre-built reports for SOX, HIPAA, GDPR, PCI-DSS, ISO 27001, FISMA, GLBA. Configure report scheduling under Reports > Schedule Reports.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_rpt_002",
+          "text": "Privileged account activity reports are reviewed (Domain Admin logons, privilege use)",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review privileged account activity reports weekly at minimum. Configure automated email delivery for 'Domain Admin Logon Activities', 'Privilege Use Audit', and 'Admin User Account Changes'. These are critical for detecting insider threats and privilege misuse.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_rpt_003",
+          "text": "User Behavior Analytics (UBA) reports are enabled and baseline is established",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable UBA in ADAudit Plus and allow 2-4 weeks for baseline establishment before tuning thresholds. UBA detects anomalous logon times, mass file deletions, unusual authentication patterns, and other indicators of compromise. Navigate to UBA > User Risk Score Dashboard.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_rpt_004",
+          "text": "MITRE ATT&CK-mapped threat reports are reviewed",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Review MITRE ATT&CK mapped reports regularly to identify AD-specific attack patterns (Kerberoasting, Pass-the-Hash, DCSync, Golden Ticket attacks). Navigate to Reports > Threat Reports > MITRE ATT&CK to see mapped detections.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_rpt_005",
+          "text": "Risk Assessment Dashboard is configured and reviewed periodically",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable the AD Risk Assessment Dashboard which scores your AD health against security benchmarks (CIS, Microsoft Security Baseline). It identifies misconfigurations like: accounts with reversible passwords, stale admin accounts, unconstrained Kerberos delegation, and AD attack paths.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_rpt_006",
+          "text": "Attack Surface Analyzer for AD / Azure AD is run and findings are remediated",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Run the Attack Surface Analyzer to identify your AD attack surface: Kerberoastable accounts, AS-REP roastable accounts, Pass-the-Hash susceptible accounts, DC Shadow risks, and Azure AD misconfiguration risks. Schedule quarterly assessments and track remediation.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alerts",
+      "name": "Alerts & Notifications",
+      "criteria": [
+        {
+          "id": "adaudit_alr_001",
+          "text": "Critical threshold alerts are configured (account lockouts, mass deletions, privileged group changes)",
+          "type": "PU/HC",
+          "helpLink": "",
+          "recommendation": "Configure threshold alerts for: >3 failed logons in 5 minutes, any Domain Admin group modification, any GPO change, mass user deletion (>10 in 1 minute), any Kerberos TGT request anomaly. Navigate to Alerts > Alert Profiles to configure. Ensure email and SIEM forwarding is configured.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_alr_002",
+          "text": "Real-time email/SMS notifications are tested and working",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Test alert notifications end-to-end by triggering a test lockout or non-critical change. Verify the alert reaches the configured mailbox within 60 seconds. Configure SMTP settings in Admin > Mail Server Settings and test via the built-in test option.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_alr_003",
+          "text": "AI-driven anomaly detection alerts are enabled and tuned",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable AI/ML-driven anomaly detection in UBA settings. Allow a 30-day learning period before enabling automatic alerts to reduce false positives. Configure anomaly alerts for: unusual logon hours, new device authentication, atypical resource access volume, and privilege escalation patterns.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_alr_004",
+          "text": "ITDR (Identity Threat Detection & Response) alerts are configured for high-risk identity events",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure ITDR alert profiles targeting the highest-risk AD attack techniques: DCSync attack detection (event 4662 with DS-Replication permissions), Kerberoasting (event 4769 with RC4 encryption), Golden/Silver ticket attacks, Pass-the-Hash, and AdminSDHolder manipulation. Enable automated response actions for critical ITDR alerts.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_alr_005",
+          "text": "Alerts are forwarded to Log360 / SIEM for correlation",
+          "type": "PU/HC",
+          "helpLink": "",
+          "recommendation": "Configure ADAudit Plus to forward alerts to Log360 via syslog/API integration. This enables cross-product correlation—an AD brute force combined with a VPN authentication from a foreign country can be correlated as a credential stuffing attack. Configure in Admin > Integrations > Log360.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "admin_settings",
+      "name": "Admin & Configuration",
+      "criteria": [
+        {
+          "id": "adaudit_adm_001",
+          "text": "Two-factor authentication (2FA) is enabled for ADAudit Plus console access",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Enable 2FA for all ADAudit Plus administrator accounts. Navigate to Admin > Security > Two-Factor Authentication. Support TOTP (Authenticator App), Duo Security, or RADIUS 2FA. ADAudit Plus contains highly sensitive audit data—unauthorized access could reveal security posture to attackers.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_adm_002",
+          "text": "Role-based access control (RBAC) is configured with least-privilege roles",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Define specific roles for: Auditors (read-only reports), Security Analysts (alerts + reports), Administrators (full access). Avoid granting admin rights to all users. Navigate to Admin > User Management > Roles to configure granular permissions per domain/OU.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_adm_003",
+          "text": "Automated database backup is configured and backup retention meets policy",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Configure automated database backups with at least 90-day retention. Many compliance frameworks (SOX, HIPAA) require 1-7 year audit log retention. Navigate to Admin > Database Backup and configure daily backups to a separate storage location (NAS/backup server, not the ADAudit Plus server).",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_adm_004",
+          "text": "Log archiving is configured for long-term audit trail retention",
+          "type": "HC/PU",
+          "helpLink": "",
+          "recommendation": "Configure log archiving to compress and move older audit data to network storage. Set archival thresholds matching your compliance requirements. For HIPAA/PCI, minimum 1 year online + 6 years offline. Navigate to Admin > Log Archival Settings.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_adm_005",
+          "text": "HTTPS (TLS) is enforced for all web console access",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Enforce HTTPS-only access and install a valid SSL certificate from your enterprise CA or a public CA. Disable HTTP access. Use TLS 1.2+ only, disable TLS 1.0/1.1 and weak cipher suites. Configure in Admin > Security > SSL/TLS Settings. This protects sensitive audit data in transit.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_adm_006",
+          "text": "SIEM integration (Log360 / Splunk / QRadar) is configured for real-time alert forwarding",
+          "type": "INFO",
+          "helpLink": "",
+          "recommendation": "Configure syslog/CEF forwarding to your primary SIEM. ADAudit Plus should function as a primary AD telemetry source for your SIEM. In Log360 environments, use the native integration. For third-party SIEMs, configure syslog CEF output in Admin > Integrations > SIEM.",
+          "statusOptions": [
+            "info"
+          ]
+        },
+        {
+          "id": "adaudit_adm_007",
+          "text": "Audit trail for ADAudit Plus itself (product activity log) is enabled",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Enable product audit logging to track who accessed ADAudit Plus, what reports they ran, and what configuration changes were made. This is critical for maintaining the integrity of your audit trail. Navigate to Admin > Activity Log to review and export product activity.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security_hardening",
+      "name": "Security Hardening",
+      "criteria": [
+        {
+          "id": "adaudit_sec_001",
+          "text": "ADAudit Plus server is hardened (unnecessary services disabled, OS patched)",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Apply CIS Benchmark hardening to the ADAudit Plus server OS. Disable unnecessary services (IIS, FTP, Telnet), enable Windows Defender/EDR, configure host-based firewall, apply all OS patches, and enable BitLocker. Apply principle of least privilege to all service accounts.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_sec_002",
+          "text": "Tamper protection is enabled to prevent unauthorized modification of ADAudit Plus settings",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Enable audit logging for all configuration changes within ADAudit Plus. Restrict access to the installation directory via NTFS permissions. Configure file integrity monitoring on critical configuration files. Ensure only the service account can write to the data directory.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_sec_003",
+          "text": "AD delegation rights for ADAudit Plus service account are scoped to minimum required permissions",
+          "type": "HC",
+          "helpLink": "",
+          "recommendation": "Review and restrict ADAudit Plus service account permissions to the minimum required: Read access to AD objects, Event Log access on DCs, and replication monitoring rights. Remove any Domain Admin or Schema Admin memberships. Use ADAudit Plus's built-in permission delegation wizard.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_sec_004",
+          "text": "Password policy enforcement monitoring is configured (weak passwords, expired, never expires)",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable password policy compliance reporting to identify: accounts with 'Password Never Expires', accounts with blank passwords, weak Fine-Grained Password Policies, and accounts not subject to any password policy. Navigate to Reports > Password Management Reports.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "itdr",
+      "name": "ITDR & Threat Detection",
+      "criteria": [
+        {
+          "id": "adaudit_itdr_001",
+          "text": "ITDR module is licensed and enabled for Identity Threat Detection & Response",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Enable the ITDR module in ADAudit Plus to get pre-built detection rules for: Kerberoasting, Pass-the-Hash, DCSync, Golden Ticket attacks, AD replication attacks, and Entra ID privilege escalation. ITDR correlates multiple AD events into a coherent attack narrative.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_itdr_002",
+          "text": "Automated response actions are configured for critical ITDR detections (account lockout, session revocation)",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure automated response playbooks for high-severity ITDR detections: automatically disable compromised accounts, revoke active Kerberos tickets, isolate endpoints via EDR integration, and notify SOC. Navigate to ITDR > Response Playbooks. Test each playbook in a staging environment first.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_itdr_003",
+          "text": "Privileged Access Workstation (PAW) monitoring is configured for Tier 0 asset access",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Configure ADAudit Plus to specifically monitor and alert on any authentication to Tier 0 assets (Domain Controllers, PKI servers, AD Connect servers) from non-PAW workstations. This is a critical indicator of lateral movement and credential theft.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        },
+        {
+          "id": "adaudit_itdr_004",
+          "text": "Azure AD Conditional Access policy change monitoring is active",
+          "type": "PU",
+          "helpLink": "",
+          "recommendation": "Monitor all Azure AD Conditional Access policy changes. Attackers with Azure AD admin access often disable MFA enforcement by modifying CA policies. Configure alerts for any CA policy creation, modification, or deletion in Azure AD Alerts section.",
+          "statusOptions": [
+            "configured",
+            "partial",
+            "not_configured",
+            "na"
+          ]
+        }
+      ]
+    }
+  ]
 }
